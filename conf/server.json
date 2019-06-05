@@ -1,0 +1,7 @@
+{
+  "LogLevel": "debug",
+  "LogPath": "",
+  "TCPAddr": ":7000",
+  "GameTcpAddr": ":7004",
+  "MaxConnNum": 20000
+}

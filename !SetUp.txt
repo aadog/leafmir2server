@@ -1,0 +1,99 @@
+[Server]
+ServerIndex=0
+ServerName=Çå·ç
+ServerNumber=0
+VentureServer=False
+TestServer=TRUE
+TestLevel=1
+TestGold=1000
+TestServerUserLimit=1000
+ServiceMode=False
+NonPKServer=False
+
+DBAddr=127.0.0.1
+DBPort=6000
+IDSAddr=127.0.0.1
+IDSPort=5600
+MsgSrvAddr=127.0.0.1
+MsgSrvPort=4900
+
+HumLimit=30
+MonLimit=30
+ZenLimit=30
+NpcLimit=5
+SocLimit=30
+DecLimit=10
+UserFull=200
+ZenFastStep=300
+SendBlock=1000
+CheckBlock=8000
+AvailableBlock=250
+GateLoad=0
+LogServerAddr=127.0.0.1
+LogServerPort=10000
+ViewHackMessage=TRUE
+ViewAdmissionFailure=TRUE
+
+HalfFeeStart=2
+HalfFeeEnd=10
+;ÉêÇëÒ¹¼äÕÛ¿Û
+;0: false  1: true
+DiscountForNightTime=1
+DBName=HeroDB
+
+[Share]
+BaseDir=.\Share\
+GuildDir=.\GuildBase\Guilds\
+GuildFile=.\GuildBase\Guildlist.txt
+VentureDir=.\ShareV\
+ConLogDir=.\ConLog\
+ChatLogBaseDir=.\ChatLog\
+CastleDir=.\Envir\Castle\
+EnvirDir=.\Envir\
+MapDir=.\Map\
+
+[Setup]
+ItemNumber=21441611
+HomeMap=0
+HomeX=289
+HomeY=618
+
+ClientFile1 =c:\Legend of Mir\mir2.exe
+ClientFile2 =c:\Legend of Mir\mir2.exe
+ClientFile3 =c:\Legend of Mir\mir2.exe
+
+
+[Names]
+ClothsMan        = '²¼ÒÂ(ÄĞ)'
+ClothsWoman      = '²¼ÒÂ(Å®)'
+WoodenSword      = 'Ä¾½£'
+Candle           = 'À¯Öò'
+BasicDrug        = '½ğ´´Ò©(Ğ¡Á¿)'
+
+GoldStone        = '½ğ¿ó'
+SilverStone      = 'Òø¿ó'
+SteelStone       = 'Ìú¿ó'
+CopperStone      = 'Í­¿ó'
+BlackStone       = 'ºÚÌú¿óÊ¯'
+Gem1Stone        = '¿ó1'
+Gem2Stone        = '¿ó2'
+Gem3Stone        = '¿ó3'
+Gem4Stone        = '¿ó4'
+
+Zuma1            = '×æÂêÎÀÊ¿'
+Zuma2            = '×æÂêµñÏñ'
+Zuma3            = '×æÂê¹­¼ıÊÖ'
+Zuma4            = 'Ğ¨¶ê'
+
+Bee              = 'òùòğ'
+Spider           = '±¬ÁÑÖ©Öë'
+
+Skeleton         = '±äÒì÷¼÷Ã'
+Dragon           = 'ÉñÊŞ'
+Dragon1          = 'ÉñÊŞ1'
+
+WomaHorn         = 'ÎÖÂêºÅ½Ç'
+BuildGuildFee    = 1000000
+ZumaPiece        = '×æÂêÍ·Ïñ'
+
+
