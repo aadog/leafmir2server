@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	lconf.LogFlag=log.Lshortfile
+	lconf.LogFlag = log.Lshortfile
 	lconf.LogLevel = conf.Server.LogLevel
 	lconf.LogPath = conf.Server.LogPath
 	lconf.LogFlag = conf.LogFlag
@@ -25,4 +25,5 @@ func main() {
 		login.Module,
 		game.Module,
 	)
+
 }
