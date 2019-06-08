@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+
 	lconf.LogFlag = log.Lshortfile
 	lconf.LogLevel = conf.Server.LogLevel
 	lconf.LogPath = conf.Server.LogPath
@@ -21,8 +22,8 @@ func main() {
 
 	leaf.Run(
 		gate.Module,
-		gamegate.Module,
 		login.Module,
+		gamegate.Module,
 		game.Module,
 	)
 

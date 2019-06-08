@@ -1,15 +1,37 @@
 unit Unittest;
 
 interface
-
+uses
+Classes,
+SysUtils,
+EncdDecd;
+type PTMemoryStream=^TMemoryStream;
 procedure cEncodeString(_in:PAnsiChar;_key:PAnsiChar;outbuf:PAnsiChar;_outlen:pInteger);stdcall;external '../Project.dll' name 'cEncodeString';
 procedure cDecodeString(_in:PAnsiChar;_key:PAnsiChar;outbuf:PAnsiChar;_outlen:pInteger);stdcall;external '../Project.dll' name 'cDecodeString';
 procedure cBase64Encode(_in:PAnsiChar;_inlen:Integer;_outbuf:PAnsiChar;_outlen:pInteger);stdcall;external '../Project.dll' name 'cBase64Encode';
 procedure cBase64Decode(_in:PAnsiChar;_outbuf:PAnsiChar;_outlen:pInteger);stdcall;external '../Project.dll' name 'cBase64Decode';
+procedure cDecodeStream(_instm:pbyte;_inlen:Integer;_outstm:pbyte;var _outlen:integer;_key:PAnsiChar);stdcall;external '../Project.dll' name 'cDecodeStream';
+procedure cEncodeStream(_instm:pbyte;_inlen:Integer;_outstm:pbyte;var _outlen:integer;_key:PAnsiChar);external '../Project.dll' name 'cEncodeStream';
+
+
 procedure testcDecodeString();
 procedure testcBase64Encode();
 procedure testcBase64Decode();
+procedure testbuf(_buf:PAnsiString);
 implementation
+function StrToHex(AStr: string): string;
+var
+i : Integer;
+ch:char;
+begin
+
+  Result:='';
+  for i:=1 to length(AStr)  do
+  begin
+    ch:=AStr[i];
+    Result:=Result+IntToHex(Ord(ch),2);
+  end;
+end;
 //test
 procedure testcDecodeString();
 var
@@ -52,5 +74,16 @@ begin
     Writeln(PAnsiChar(outbuf)[9]);
     Writeln(outbuf);
 end;
+
+procedure testbuf(_buf:PAnsiString);
+var
+inbuf:TBytes;
+outbuf:TBytes;
+outlen:Integer;
+begin
+    inbuf:=BytesOf('aaaaaaa');
+    cEncodeStream(pbyte(@inbuf[0]),Length(inbuf),pbyte(@outbuf[0]),outlen,pansichar('KeyString'));
+end;
+
 
 end.

@@ -3,7 +3,7 @@ package internal
 import (
 	"github.com/name5566/leaf/gate"
 	"leafmir2server/conf"
-	"leafmir2server/game"
+	"leafmir2server/login"
 	"leafmir2server/msg"
 )
 
@@ -24,8 +24,8 @@ func (m *Module) OnInit() {
 		LenMsgLen:       conf.LenMsgLen,
 		LittleEndian:    conf.LittleEndian,
 		Processor:       msg.Processor,
-		AgentChanRPC:    game.ChanRPC,
-		MsgParser:&MsgParser{},
+		AgentChanRPC:    login.ChanRPC,
+		MsgParser:       &MsgParser{},
 	}
 
 }

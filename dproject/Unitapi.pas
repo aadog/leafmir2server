@@ -2,9 +2,26 @@ unit Unitapi;
 
 interface
 uses
-Unitcrypto,SysUtils;
+Unitcrypto,SysUtils,Classes;
 
 implementation
+
+type PTMemoryStream=^TMemoryStream;
+
+function StrToHex(AStr: string): string;
+var
+i : Integer;
+ch:char;
+begin
+
+  Result:='';
+  for i:=1 to length(AStr)  do
+  begin
+    ch:=AStr[i];
+    Result:=Result+IntToHex(Ord(ch),2);
+  end;
+end;
+
 
 function StrPasEx(ABuff: PAnsiChar; ALength: Integer): AnsiString; inline;
 begin
@@ -50,12 +67,61 @@ begin
     StrCopy(_outbuf,PAnsiChar(r));
     _outlen^:=Length(r);
 end;
+procedure cDecodeStream(_instm:pbyte;_inlen:Integer;_outstm:pbyte;var _outlen:integer;_key:PAnsiChar);stdcall;
+var
+key:string;
+instm:TMemoryStream;
+outstm:TMemoryStream;
+begin
 
+    instm:=TMemoryStream.create;
+    outstm:=TMemoryStream.Create;
+    try
+       instm.WriteBuffer(_instm^,_inlen);
+       instm.Position:=0;
+       DecodeStream(instm,outstm,stringof(bytesof(_key)));
+       outstm.Seek(0, soFromBeginning);
+       if _outstm<>nil then
+       begin
+           Move(outstm.Memory^, _outstm^, outstm.Size);
+       end;  
+       _outlen := outstm.Size;
+    finally
+      instm.Free;
+      outstm.Free;
+    end;
+end;
+procedure cEncodeStream(_instm:pbyte;_inlen:Integer;_outstm:pbyte;var _outlen:integer;_key:PAnsiChar);stdcall;
+var
+instm:TMemoryStream;
+outstm:TMemoryStream;
+begin
+//    instm:=TMemoryStream.create;
+//    outstm:=TMemoryStream.Create;
+//    try
+//       instm.WriteBuffer(_instm^,_inlen);
+//       instm.Position:=0;
+//       EncodeStream(instm,outstm,_key);
+//       outstm.Seek(0, soFromBeginning);
+//       if _outstm<>nil then
+//       begin
+//           Move(outstm.Memory^, _outstm^, outstm.Size);
+//       end;
+//       _outlen := outstm.Size;
+//    finally
+//      instm.Free;
+//      outstm.Free;
+//    end;
+end;
 
 
 exports
 cEncodeString,
 cDecodeString,
 cBase64Decode,
-cBase64Encode;
+cBase64Encode,
+cEncodeStream,
+cDecodeStream;
+
+
 end.

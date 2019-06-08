@@ -2,11 +2,14 @@ unit Unitcrypto;
 
 interface
 uses
+Classes,
 uTPLb_Codec,uTPLb_CryptographicLibrary,uTPLb_Constants,SysUtils;
 procedure Base64Encode(const ABuffer: PAnsiChar; ADataLen: Integer; out Result: AnsiString);
 procedure Base64Decode(const ABase64Input: AnsiString; out ABuffer: PAnsiChar; out ADataLen, ABufferLen: Integer);
 function EncodeString(const Source:AnsiString; Key: String): AnsiString;
 function DecodeString(const Source: AnsiString; const Key: String): String;
+procedure DecodeStream(InStream, OutStream: TStream; const Key: String);
+procedure EncodeStream(InStream, OutStream: TStream; const Key: String);
 implementation
 const
   Base64_CodeTable: array [0..64] of AnsiChar = (
@@ -149,6 +152,49 @@ begin
     ACode.ChainModeId  :=  CBC_ProgId;
     ACode.Password :=  Key;
     ACode.DecryptString(Result, Source);
+  finally
+    FreeAndNil(ACode);
+    FreeAndNil(ALibrary);
+  end;
+end;
+procedure DecodeStream(InStream, OutStream: TStream; const Key: String);
+var
+  ACode: TCodeC;
+  ALibrary: TCryptographicLibrary;
+begin
+  ACode     :=  TCodeC.Create(nil);
+  ALibrary  :=  TCryptographicLibrary.Create(nil);
+  try
+    ACode.CryptoLibrary  :=  ALibrary;
+    ACode.AsymetricKeySizeInBits := 8;
+    ACode.StreamCipherId := BlockCipher_ProgId;
+    ACode.BlockCipherId  :=  Blowfish_ProgId;
+    ACode.ChainModeId  :=  CBC_ProgId;
+    ACode.Password :=  Key;
+    ACode.DecryptStream(OutStream, InStream);
+  finally
+    FreeAndNil(ACode);
+    FreeAndNil(ALibrary);
+  end;
+end;
+procedure EncodeStream(InStream, OutStream: TStream; const Key: String);
+var
+  ACode: TCodeC;
+  ALibrary: TCryptographicLibrary;
+begin
+  ACode     :=  TCodeC.Create(nil);
+  ALibrary  :=  TCryptographicLibrary.Create(nil);
+
+  try
+    ACode.CryptoLibrary  :=  ALibrary;
+    ACode.AsymetricKeySizeInBits := 1024;
+    ACode.StreamCipherId := BlockCipher_ProgId;
+    ACode.BlockCipherId  :=  Blowfish_ProgId;
+    ACode.ChainModeId  :=  CBC_ProgId;
+    ACode.Password :=  Key;
+
+    ACode.EncryptStream(InStream, OutStream);
+
   finally
     FreeAndNil(ACode);
     FreeAndNil(ALibrary);

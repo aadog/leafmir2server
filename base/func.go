@@ -1,9 +1,6 @@
 package base
 
 import (
-	"github.com/andreburgaud/crypt2go/ecb"
-	"github.com/andreburgaud/crypt2go/padding"
-	"golang.org/x/crypto/blowfish"
 	"golang.org/x/text/encoding/simplifiedchinese"
 )
 
@@ -47,41 +44,3 @@ func ConvertByte2String(byte []byte, charset Charset) string {
 	}
 	return str
 }
-func D91_Base64Encode(_in []byte) {
-
-}
-
-func BlowfishDecrypt(et, key []byte) []byte {
-	block, err := blowfish.NewCipher(key)
-	if err != nil {
-		panic(err.Error())
-	}
-	mode := ecb.NewECBDecrypter(block)
-	pt := make([]byte, len(et))
-	mode.CryptBlocks(pt, et)
-	padder := padding.NewPkcs5Padding()
-	pt, err = padder.Unpad(pt) // unpad plaintext after decryption
-	if err != nil {
-		panic(err.Error())
-	}
-	return pt
-}
-
-//
-//func BlowfishDecrypt(value, key []byte) ([]byte, error) {
-//	//deval,err:=base64.StdEncoding.DecodeString(string(value))
-//	//if err!=nil{
-//	//	return nil,err
-//	//}
-//	//value=deval
-//	log.Println(string(value))
-//
-//	dcipher, err := blowfish.NewCipher(key)
-//	if (err != nil) { return nil, err }
-//	div := value[:blowfish.BlockSize]
-//	decrypted := value[blowfish.BlockSize:]
-//	if len(decrypted)%blowfish.BlockSize != 0 { return nil, err }
-//	dcbc := cipher.NewCBCDecrypter(dcipher, div)
-//	dcbc.CryptBlocks(decrypted, decrypted)
-//	return decrypted, nil
-//}
