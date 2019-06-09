@@ -17,19 +17,12 @@ import (
 type MsgParser struct {
 }
 
-func NewMsgParser() *MsgParser {
-	p := new(MsgParser)
-	return p
-}
-
 func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, error) {
 	if len(_in) != 44 {
 		return nil, errors.New("长度必须为44")
 	}
 	return nil, errors.New("实现不完整")
 }
-
-// goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	nresseq, _ := ca.Get(base.Reskey(conn.RemoteAddr().String()))
 	defer func() {

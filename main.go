@@ -24,6 +24,7 @@ func main() {
 
 	//初始化路由
 	router()
+	//初始化服务器
 	leaf.Run(
 		&sel.Module{},
 		&selgate.Module{},

@@ -3,10 +3,18 @@ package selgate
 import (
 	"fmt"
 	"github.com/name5566/leaf/gate"
+	"github.com/patrickmn/go-cache"
 	"leafmir2server/conf"
 	"leafmir2server/msg"
 	"leafmir2server/sel"
+	"time"
 )
+
+var ca *cache.Cache
+
+func init() {
+	ca = cache.New(time.Hour*1000, time.Hour*1000)
+}
 
 type Module struct {
 	*gate.Gate
@@ -24,6 +32,6 @@ func (m *Module) OnInit() {
 		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.SelTCPPort),
 		Processor:       msg.Processor,
 		AgentChanRPC:    sel.ChanRPC,
-		MsgParser:       NewMsgParser(),
+		MsgParser:       &MsgParser{},
 	}
 }

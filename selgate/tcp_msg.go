@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
@@ -12,21 +11,10 @@ import (
 	"strings"
 )
 
-type tcpinfo struct {
-	ResReq int32
-}
-
-var mptcpinfo = map[string]tcpinfo{}
-
 // --------------
 // | len | data |
 // --------------
 type MsgParser struct {
-}
-
-func NewMsgParser() *MsgParser {
-	p := new(MsgParser)
-	return p
 }
 
 func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, error) {
@@ -35,13 +23,12 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 	}
 	return nil, errors.New("实现不完整")
 }
-
-// goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
+	nresseq, _ := ca.Get(base.Reskey(conn.RemoteAddr().String()))
 	defer func() {
-		_mp := mptcpinfo[conn.RemoteAddr().String()]
-		_mp.ResReq++
+		ca.SetDefault(base.Reskey(conn.RemoteAddr().String()), nresseq.(int)+1)
 	}()
+
 	rd := bufio.NewReader(conn)
 	bt, err := rd.ReadBytes('!')
 	if err != nil {
@@ -58,7 +45,7 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		return nil, errors.New("最短长度为3")
 	}
 
-	if mptcpinfo[conn.RemoteAddr().String()].ResReq == 0 { //此时还未认证，开始解密认证信息,的token效验
+	if nresseq == 0 { //此时还未认证，开始解密认证信息,的token效验
 		nseq, err := strconv.Atoi(string(bt[1]))
 		if err != nil {
 			return nil, err
@@ -110,8 +97,6 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	}
 	return bt, nil
 }
-
-// goroutine safe
 func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	var bt []byte
 	for _, it := range args {
@@ -147,8 +132,10 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	return nil
 }
 func (p *MsgParser) Conn(conn *network.TCPConn) {
-
+	ca.SetDefault(base.Reqkey(conn.RemoteAddr().String()), 0)
+	ca.SetDefault(base.Reskey(conn.RemoteAddr().String()), 0)
 }
 func (p *MsgParser) Close(conn *network.TCPConn) {
-	fmt.Println("已关闭conn")
+	ca.Delete(base.Reqkey(conn.RemoteAddr().String()))
+	ca.Delete(base.Reskey(conn.RemoteAddr().String()))
 }
