@@ -1,35 +1,43 @@
 package msg
-var Processor=NewMir2Processor()
+
+var Processor = NewMir2Processor()
 
 func init() {
-	Processor.Register(&LoginMessage{},CM_IDPASSWORD)
-	Processor.Register(&SelectServerMessage{},CM_SELECTSERVER)
-	Processor.Register(&QuerychrMessage{},CM_QUERYCHR)
-	Processor.Register(&SelchrMessage{},CM_SELCHR)
-	Processor.Register(&GameLoginMessage{},CM_GAMELOGIN)
-	Processor.Register(&LoginnoticeokMessage{},CM_LOGINNOTICEOK)
-	Processor.Register(&QueryBagitemsMessage{},CM_QUERYBAGITEMS)
+	Processor.Register(&LoginMessage{}, CM_IDPASSWORD)
+	Processor.Register(&SelectServerMessage{}, CM_SELECTSERVER)
+	Processor.Register(&QuerychrMessage{}, CM_QUERYCHR)
+	Processor.Register(&SelchrMessage{}, CM_SELCHR)
+	Processor.Register(&GameLoginMessage{}, CM_GAMELOGIN)
+	Processor.Register(&LoginnoticeokMessage{}, CM_LOGINNOTICEOK)
+	Processor.Register(&QueryBagitemsMessage{}, CM_QUERYBAGITEMS)
+	Processor.Register(&ReqTokenMessage{}, SM_REQTOKEN)
+	Processor.Register(&ResTokenMessage{}, CM_RESTOKEN)
 }
-
 
 type LoginMessage struct {
-	Mir2Message
+	BaseMsg
 }
-type SelectServerMessage struct{
-	Mir2Message
+type SelectServerMessage struct {
+	BaseMsg
 }
-type QuerychrMessage struct{
-	Mir2Message
+type QuerychrMessage struct {
+	BaseMsg
 }
-type SelchrMessage struct{
-	Mir2Message
+type SelchrMessage struct {
+	BaseMsg
 }
 type GameLoginMessage struct {
-	Mir2Message
+	BaseMsg
 }
-type LoginnoticeokMessage struct{
-	Mir2Message
+type LoginnoticeokMessage struct {
+	BaseMsg
 }
-type QueryBagitemsMessage struct{
-	Mir2Message
+type QueryBagitemsMessage struct {
+	BaseMsg
+}
+type ReqTokenMessage struct {
+	BaseMsg
+}
+type ResTokenMessage struct {
+	BaseMsg
 }

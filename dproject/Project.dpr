@@ -13,8 +13,9 @@ library Project;
 uses
   SysUtils,
   Classes,
-  Unitcrypto in 'Unitcrypto.pas',
-  Unitapi in 'Unitapi.pas';
+  uEDCode in 'uEDCode.pas',
+  Unitapi in 'Unitapi.pas',
+  EDcode in 'EDcode.pas';
 
 {$R *.res}
 begin

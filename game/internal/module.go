@@ -172,7 +172,7 @@ func DecodeM2project_with_path(_path string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	dbtstream, err := base.DecodeStream(btm2project, []byte("964CF629-E9EC-47B8-AAFE-39172793BEB4-D89A1212-DB56-4858-9ADE-CF19A782E5A3-0B92A08-3578-49B7-BDF6-21B73AC5D9E5\x00"))
+	dbtstream, err := base.DecodeStream_uEDCode(btm2project, []byte("964CF629-E9EC-47B8-AAFE-39172793BEB4-D89A1212-DB56-4858-9ADE-CF19A782E5A3-0B92A08-3578-49B7-BDF6-21B73AC5D9E5"))
 	if err != nil {
 		return nil, err
 	}

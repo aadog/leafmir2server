@@ -1,4 +1,4 @@
-unit Unitcrypto;
+unit uEDCode;
 
 interface
 uses
@@ -6,7 +6,7 @@ Classes,
 uTPLb_Codec,uTPLb_CryptographicLibrary,uTPLb_Constants,SysUtils;
 procedure Base64Encode(const ABuffer: PAnsiChar; ADataLen: Integer; out Result: AnsiString);
 procedure Base64Decode(const ABase64Input: AnsiString; out ABuffer: PAnsiChar; out ADataLen, ABufferLen: Integer);
-function EncodeString(const Source:AnsiString; Key: String): AnsiString;
+function EncodeString(const Source, Key: String): AnsiString;
 function DecodeString(const Source: AnsiString; const Key: String): String;
 procedure DecodeStream(InStream, OutStream: TStream; const Key: String);
 procedure EncodeStream(InStream, OutStream: TStream; const Key: String);
@@ -117,7 +117,7 @@ begin
     ABuffer[I] := #0;
   end;
 end;
-function EncodeString(const Source:AnsiString; Key: String): AnsiString;
+function EncodeString(const Source, Key: String): AnsiString;
 var
   ACode: TCodeC;
   ALibrary: TCryptographicLibrary;
