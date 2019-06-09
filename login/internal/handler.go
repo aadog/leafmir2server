@@ -5,8 +5,10 @@ import (
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"leafmir2server/base"
+	"leafmir2server/conf"
 	"leafmir2server/msg"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -27,8 +29,8 @@ func handleSelectserver(args []interface{}) {
 	servername := m.Lines[0]
 	log.Debug("选择的服务器:%s", base.ConvertByte2String([]byte(servername), base.GBK))
 
-	loginserverip := "127.0.0.1"
-	loginserverport := "7004"
+	loginserverip := conf.Server.TcpAddr
+	loginserverport := strconv.Itoa(conf.Server.SelTCPPort)
 	sessionid := "session"
 	selectserverr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_SELECTSERVER_OK, 25, 0, 0, 0, 0, 0, 0,
 		loginserverip,

@@ -12,6 +12,7 @@ func init() {
 	Processor.Register(&QueryBagitemsMessage{}, CM_QUERYBAGITEMS)
 	Processor.Register(&ReqTokenMessage{}, SM_REQTOKEN)
 	Processor.Register(&ResTokenMessage{}, CM_RESTOKEN)
+	Processor.Register(&SelResSessionMessage{}, CM_SELRESSESSION)
 }
 
 type LoginMessage struct {
@@ -39,5 +40,8 @@ type ReqTokenMessage struct {
 	BaseMsg
 }
 type ResTokenMessage struct {
+	BaseMsg
+}
+type SelResSessionMessage struct {
 	BaseMsg
 }

@@ -1,7 +1,9 @@
 {
   "LogLevel": "debug",
   "LogPath": "",
-  "TCPAddr": ":7000",
-  "GameTcpAddr": ":7004",
+  "LoginTCPPort": 7000,
+  "SelTCPPort": 7001,
+  "GameTcpPort": 7004,
+  "TCPADDR":"127.0.0.1",
   "MaxConnNum": 20000
 }

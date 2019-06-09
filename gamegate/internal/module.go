@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"github.com/name5566/leaf/gate"
 	"leafmir2server/conf"
 	"leafmir2server/game"
@@ -20,12 +21,12 @@ func (m *Module) OnInit() {
 		HTTPTimeout:     conf.HTTPTimeout,
 		CertFile:        conf.Server.CertFile,
 		KeyFile:         conf.Server.KeyFile,
-		TCPAddr:         conf.Server.GameTcpAddr,
+		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.GameTcpPort),
 		LenMsgLen:       conf.LenMsgLen,
 		LittleEndian:    conf.LittleEndian,
 		Processor:       msg.Processor,
 		AgentChanRPC:    game.ChanRPC,
-		MsgParser:&MsgParser{},
+		MsgParser:       &MsgParser{},
 	}
 
 }

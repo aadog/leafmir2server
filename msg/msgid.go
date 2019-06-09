@@ -349,4 +349,5 @@ const (
 	CM_GAMELOGIN        = 8888
 	SM_REQTOKEN         = 8889 //服务器token获取
 	CM_RESTOKEN         = 8890 //客户端token应答
+	CM_SELRESSESSION    = 8891 //游戏网关发送session效验
 )

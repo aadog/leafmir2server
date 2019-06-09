@@ -20,7 +20,7 @@ func (this *BaseMsg) SetMir2Message(_message *Mir2Message) {
 }
 
 type Mir2Message struct {
-	Ident      int32  //2
+	Ident      int32  //4 //delphi松散模式有自动32位需要补码两位
 	Recog      int32  //4
 	Param      int32  //4
 	Tag        int32  //4
@@ -28,8 +28,8 @@ type Mir2Message struct {
 	NSessionID int32  //4
 	NToken     int32  //4
 	CRC        uint32 //4
-	//Align int16          //delphi松散模式有自动32位需要补码两位
-	Lines []string
+	Lines      []string
+	Raw        []byte
 }
 
 func (this *Mir2Message) EncodeBytes() ([]byte, error) {
@@ -67,13 +67,17 @@ func (this *Mir2Message) EncodeBytes() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	//err=binary.Write(wbuf,binary.LittleEndian,it.Align)
-	//if err!=nil{
-	//	return nil,err
-	//}
-	_, err = wbuf.WriteString(it.Stringlines())
-	if err != nil {
-		return nil, err
+
+	if this.Raw == nil {
+		_, err = wbuf.WriteString(it.Stringlines())
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		_, err = wbuf.Write(this.Raw)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return wbuf.Bytes(), nil
@@ -86,6 +90,9 @@ func (this *Mir2Message) Stringlines() string {
 		}
 		r = fmt.Sprintf("%s%s", r, s)
 	}
+	//if strings.Index(r,"/")!=-1 && r!="" && r[len(r)-1]!='/'{
+	//	r = fmt.Sprintf("%s/", r)
+	//}
 	return r
 }
 func (this *Mir2Message) Add_with_line(_line string) {
@@ -96,7 +103,7 @@ func NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(
 	for _, line := range _lines {
 		lines = append(lines, line)
 	}
-	m := &Mir2Message{_msg, _recog, _param, _tag, _series, _NSessionID, _NToken, _CRC, lines}
+	m := &Mir2Message{_msg, _recog, _param, _tag, _series, _NSessionID, _NToken, _CRC, lines, nil}
 	return m
 }
 func DecodeMir2Message_with_bytes(_bytes []byte) (*Mir2Message, error) {
@@ -135,14 +142,15 @@ func DecodeMir2Message_with_bytes(_bytes []byte) (*Mir2Message, error) {
 	if err != nil {
 		return nil, err
 	}
-	//err=binary.Read(dedatareader,binary.LittleEndian,&message.Align)
-	//if err!=nil{
-	//	return nil,err
-	//}
-	messagebody := string(_bytes[32:len(_bytes)])
-	spmessagebody := strings.Split(messagebody, "/")
-	for _, body := range spmessagebody {
-		message.Lines = append(message.Lines, body)
+
+	if message.Ident == SM_STARTPLAY {
+		message.Raw = _bytes[32:len(_bytes)]
+	} else {
+		messagebody := string(_bytes[32:len(_bytes)])
+		spmessagebody := strings.Split(messagebody, "/")
+		for _, body := range spmessagebody {
+			message.Lines = append(message.Lines, body)
+		}
 	}
 	return &message, nil
 }
