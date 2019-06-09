@@ -4,30 +4,21 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"github.com/name5566/leaf/network"
-	"github.com/patrickmn/go-cache"
 	"leafmir2server/base"
 	"leafmir2server/msg"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // --------------
 // | len | data |
 // --------------
 type MsgParser struct {
-	ca *cache.Cache
 }
 
 func NewMsgParser() *MsgParser {
 	p := new(MsgParser)
-	fmt.Println("new msgparse")
-	p.ca = cache.New(10*time.Millisecond, 1*time.Microsecond)
-	p.ca.SetDefault("ResSeq", 0)
-	p.ca.SetDefault("ReqSeq", 0)
-	fmt.Println(p.ca.Get("ResSeq"))
 	return p
 }
 
@@ -40,19 +31,16 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 
 // goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
-
-	resseq, _ := p.ca.Get("ResSeq")
-	nresseq := resseq.(int)
+	nresseq, _ := ca.Get(base.Reskey(conn.RemoteAddr().String()))
 	defer func() {
-		p.ca.SetDefault("ResSeq", nresseq+1)
-		fmt.Println(resseq)
+		ca.SetDefault(base.Reskey(conn.RemoteAddr().String()), nresseq.(int)+1)
 	}()
+
 	rd := bufio.NewReader(conn)
 	bt, err := rd.ReadBytes('!')
 	if err != nil {
 		return nil, err
 	}
-
 	if strings.HasPrefix(string(bt), "#") == false {
 		return nil, errors.New("无法识别包头")
 	}
@@ -62,8 +50,8 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	if len(bt) < 3 {
 		return nil, errors.New("最短长度为3")
 	}
-
 	if nresseq == 0 { //此时还未认证，开始解密认证信息,的token效验
+
 		nseq, err := strconv.Atoi(string(bt[1]))
 		if err != nil {
 			return nil, err
@@ -78,7 +66,6 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		tokenid := decdata
 		m := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.CM_RESTOKEN, 0, 0, 0, 0, 0, 0, 0)
 		m.Add_with_line(string(tokenid))
-
 		encbt, err := m.EncodeBytes()
 		if err != nil {
 			return nil, err
@@ -108,39 +95,28 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	}
 	return bt, nil
 }
-func (p *MsgParser) Conn(conn *network.TCPConn) {
-	fmt.Println(conn.RemoteAddr().String())
-	fmt.Println("conn已经连接")
-}
-
-// goroutine safe
 func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
-	reqseq, _ := p.ca.Get("ReqSeq")
-	nreqseq := reqseq.(int)
+	nreqseq, _ := ca.Get(base.Reqkey(conn.RemoteAddr().String()))
 	defer func() {
-		p.ca.SetDefault("ReqSeq", nreqseq+1)
-		fmt.Println(nreqseq)
+		ca.SetDefault(base.Reqkey(conn.RemoteAddr().String()), nreqseq.(int)+1)
 	}()
 	var bt []byte
 	for _, it := range args {
 		bt = append(bt, it...)
 	} //合并所有byte
 	var wbuf bytes.Buffer
-
 	if nreqseq == 0 { //此时还未认证，开始解密认证信息,的token效验
+
 		message, err := msg.DecodeMir2Message_with_Txtbytes(bt)
 		if err != nil {
 			return err
 		}
-		switch message.Ident {
-		case msg.SM_REQTOKEN:
-			wbuf.WriteString("#")
-			wbuf.Write(base.EncodeString_EDCode([]byte(message.Lines[0])))
-			wbuf.WriteString("!")
 
-			//ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
-			conn.Write(wbuf.Bytes())
-		}
+		wbuf.WriteString("#")
+		wbuf.Write(base.EncodeString_EDCode([]byte(message.Lines[0])))
+		wbuf.WriteString("!")
+		//ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
+		conn.Write(wbuf.Bytes())
 	} else { //认证完成了
 		message, err := msg.DecodeMir2Message_with_bytes(bt)
 		if err != nil {
@@ -164,25 +140,14 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 		wbuf.Write(encbuf.Bytes())
 		wbuf.WriteString("!")
 		conn.Write(wbuf.Bytes())
-
 	}
-
-	////解密完成
-	//ti:=login.GetTcpInfo("aaa")
-	//if ti==nil{   //此时还未认证，开始解密认证信息,的token效验
-	//   sencdata:=base.EncodeString_EDCode(decdata)
-	//   var sencbyte bytes.Buffer
-	//   sencbyte.WriteString("#")
-	//   sencbyte.Write(sencdata)
-	//   sencbyte.WriteString("!")
-	//   conn.Write(sencbyte.Bytes())
-	//   fmt.Println("消息发送成功")
-	//}else{  //发送的是认证过后的包
-	//
-	//}
-	//conn.Write(sendbt)
 	return nil
 }
+func (p *MsgParser) Conn(conn *network.TCPConn) {
+	ca.SetDefault(base.Reqkey(conn.RemoteAddr().String()), 0)
+	ca.SetDefault(base.Reskey(conn.RemoteAddr().String()), 0)
+}
 func (p *MsgParser) Close(conn *network.TCPConn) {
-	fmt.Println("已关闭conn")
+	ca.Delete(base.Reqkey(conn.RemoteAddr().String()))
+	ca.Delete(base.Reskey(conn.RemoteAddr().String()))
 }

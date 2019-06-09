@@ -25,6 +25,7 @@ func (this *Mir2Processor) Route(msg interface{}, userData interface{}) error {
 	if i.msgHandler != nil {
 		i.msgHandler([]interface{}{msg, userData})
 	}
+
 	if i.msgRouter != nil {
 		i.msgRouter.Go(msgType, msg, userData)
 	}

@@ -2,6 +2,7 @@ package login
 
 import (
 	"encoding/hex"
+	"fmt"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"leafmir2server/base"
@@ -62,6 +63,7 @@ func handleLogin(args []interface{}) {
 
 // 响应客户端sessionid请求
 func handleRestoken(args []interface{}) {
+	fmt.Println(reflect.TypeOf(args))
 	// 收到的 Hello 消息
 	m := args[0].(*msg.ResTokenMessage)
 	// 消息的发送者

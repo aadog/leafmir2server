@@ -22,6 +22,8 @@ func main() {
 	lconf.ConsolePort = conf.Server.ConsolePort
 	lconf.ProfilePath = conf.Server.ProfilePath
 
+	//初始化路由
+	router()
 	leaf.Run(
 		&sel.Module{},
 		&selgate.Module{},

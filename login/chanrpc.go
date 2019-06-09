@@ -1,6 +1,7 @@
 package login
 
 import (
+	"fmt"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	uuid "github.com/satori/go.uuid"
@@ -26,4 +27,5 @@ func rpcNewAgent(args []interface{}) {
 func rpcCloseAgent(args []interface{}) {
 	a := args[0].(gate.Agent)
 	_ = a
+	fmt.Println("断开连接")
 }

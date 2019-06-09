@@ -2,6 +2,7 @@ package base
 
 import (
 	"crypto/md5"
+	"fmt"
 	"golang.org/x/text/encoding/simplifiedchinese"
 )
 
@@ -131,4 +132,10 @@ func Md5_with(_in []byte) []byte {
 	h := md5.New()
 	h.Write(_in)
 	return h.Sum(nil)
+}
+func Reskey(_s string) string {
+	return fmt.Sprintf("%s_Res", _s)
+}
+func Reqkey(_s string) string {
+	return fmt.Sprintf("%s_Req", _s)
 }
