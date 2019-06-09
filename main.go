@@ -7,7 +7,7 @@ import (
 	"leafmir2server/game"
 	"leafmir2server/gamegate"
 	"leafmir2server/login"
-	"leafmir2server/logingate91"
+	"leafmir2server/logingate"
 	"log"
 )
 
@@ -21,7 +21,7 @@ func main() {
 	lconf.ProfilePath = conf.Server.ProfilePath
 
 	leaf.Run(
-		logingate91.Module,
+		logingate.Module,
 		login.Module,
 		gamegate.Module,
 		game.Module,

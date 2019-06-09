@@ -7,7 +7,6 @@ import (
 	"leafmir2server/base"
 	"leafmir2server/msg"
 	"reflect"
-	"strconv"
 	"strings"
 )
 
@@ -27,14 +26,15 @@ func handleSelectserver(args []interface{}) {
 	a := args[1].(gate.Agent)
 	servername := m.Lines[0]
 	log.Debug("选择的服务器:%s", base.ConvertByte2String([]byte(servername), base.GBK))
-	Cert := 10
+
 	loginserverip := "127.0.0.1"
 	loginserverport := "7004"
-	loginservercert := strconv.Itoa(Cert)
-	selectserverr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_SELECTSERVER_OK, int32(Cert), 0, 0, 0, 0, 0, 0,
+	sessionid := "session"
+	selectserverr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_SELECTSERVER_OK, 25, 0, 0, 0, 0, 0, 0,
 		loginserverip,
 		loginserverport,
-		loginservercert,
+		"8",
+		sessionid,
 	)
 	a.WriteMsg(selectserverr)
 }
@@ -49,8 +49,11 @@ func handleLogin(args []interface{}) {
 	//loginerrr:=msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_PASSWD_FAIL,-1,0,0,0,0,0,0)
 	//a.WriteMsg(loginerrr)
 
+	nserver := int32(1)
+	server1status := "1"
+	server1name := base.ConvertString2Byte("龙际网络", base.GBK)
 	//// 给发送者回应一个 Hello 消息
-	loginr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_PASSOK_SELECTSERVER, 0, 0, 0, 1, 0, 0, 0, base.ConvertString2Byte("龙际网络", base.GBK), "1")
+	loginr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_PASSOK_SELECTSERVER, 0, 0, 0, nserver, 0, 0, 0, server1name, server1status)
 
 	a.WriteMsg(loginr)
 }
