@@ -22,8 +22,6 @@ func (m *Module) OnInit() {
 		CertFile:        conf.Server.CertFile,
 		KeyFile:         conf.Server.KeyFile,
 		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.GameTcpPort),
-		LenMsgLen:       conf.LenMsgLen,
-		LittleEndian:    conf.LittleEndian,
 		Processor:       msg.Processor,
 		AgentChanRPC:    game.ChanRPC,
 		MsgParser:       &MsgParser{},

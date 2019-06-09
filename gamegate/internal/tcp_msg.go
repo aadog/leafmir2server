@@ -7,11 +7,17 @@ import (
 	"fmt"
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
-	"leafmir2server/login"
 	"leafmir2server/msg"
 	"strconv"
 	"strings"
 )
+
+type tcpinfo struct {
+	ResReq int32
+	ReqSeq int32
+}
+
+var mptcpinfo = map[string]tcpinfo{}
 
 // --------------
 // | len | data |
@@ -33,13 +39,16 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 
 // goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
+	defer func() {
+		_mp := mptcpinfo[conn.RemoteAddr().String()]
+		_mp.ResReq++
+	}()
 
 	rd := bufio.NewReader(conn)
 	bt, err := rd.ReadBytes('!')
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(bt)
 
 	if strings.HasPrefix(string(bt), "#") == false {
 		return nil, errors.New("无法识别包头")
@@ -47,30 +56,50 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	if strings.HasSuffix(string(bt), "!") == false {
 		return nil, errors.New("无法识别包尾")
 	}
-	if len(bt) < 44+2 {
-		return nil, errors.New("最短长度为45")
-	}
-	nseq, err := strconv.Atoi(string(bt[1]))
-	if err != nil {
-		return nil, err
-	}
-	_ = nseq
-	encdata := bt[2 : len(bt)-1]
-	fmt.Println(encdata)
 
-	//解密头部字节
-	dechd := base.Base64DecodeEx_EDcode([]byte(string(encdata[:44])), 32) //传递一个拷贝
-	dechd1 := base.DecryptAES_EDcode(dechd[:16])
-	dechd2 := base.DecryptAES_EDcode(dechd[16:])
+	if mptcpinfo[conn.RemoteAddr().String()].ResReq == 0 { //如果是首次接到包
+		nseq, err := strconv.Atoi(string(bt[1]))
+		if err != nil {
+			return nil, err
+		}
+		if nseq != 1 {
+			return nil, errors.New("nseq这时必须为1")
+		}
+		encdata := bt[2 : len(bt)-1]
+		m := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.CM_GAMELOGIN, 0, 0, 0, 0, 0, 0, 0)
+		m.Add_with_line(string(base.DecodeString_EDCode(encdata)))
+		encbt, err := m.EncodeBytes()
+		if err != nil {
+			return nil, err
+		}
+		return encbt, nil
+	} else {
 
-	decd2 := base.DecodeString_EDCode([]byte(string(encdata[44:]))) //这里转string可以copy一次
-	decbt := append(dechd1, dechd2...)
-	decbt = append(decbt, decd2...)
-	rmsg, err := msg.DecodeMir2Message_with_bytes(decbt)
-	if err != nil {
-		return nil, err
+		if len(bt) < 44+2 {
+			return nil, errors.New("最短长度为45")
+		}
+		nseq, err := strconv.Atoi(string(bt[1]))
+		if err != nil {
+			return nil, err
+		}
+		_ = nseq
+		encdata := bt[2 : len(bt)-1]
+		fmt.Println(encdata)
+
+		//解密头部字节
+		dechd := base.Base64DecodeEx_EDcode([]byte(string(encdata[:44])), 32) //传递一个拷贝
+		dechd1 := base.DecryptAES_EDcode(dechd[:16])
+		dechd2 := base.DecryptAES_EDcode(dechd[16:])
+
+		decd2 := base.DecodeString_EDCode([]byte(string(encdata[44:]))) //这里转string可以copy一次
+		decbt := append(dechd1, dechd2...)
+		decbt = append(decbt, decd2...)
+		rmsg, err := msg.DecodeMir2Message_with_bytes(decbt)
+		if err != nil {
+			return nil, err
+		}
+		return rmsg.EncodeBytes()
 	}
-	return rmsg.EncodeBytes()
 }
 
 // goroutine safe
@@ -81,8 +110,7 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	} //合并所有byte
 	var wbuf bytes.Buffer
 
-	ti := login.GetTcpInfo(conn.RemoteAddr().String())
-	if ti.ReqSession == "" { //此时还未认证，开始解密认证信息,的token效验
+	if mptcpinfo[conn.RemoteAddr().String()].ReqSeq == 0 { //此时还未认证，开始解密认证信息,的token效验
 		message, err := msg.DecodeMir2Message_with_Txtbytes(bt)
 		if err != nil {
 			return err
@@ -92,7 +120,7 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 			wbuf.WriteString("#")
 			wbuf.Write(base.EncodeString_EDCode([]byte(message.Lines[0])))
 			wbuf.WriteString("!")
-			ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
+			//ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
 			conn.Write(wbuf.Bytes())
 		}
 	} else { //认证完成了

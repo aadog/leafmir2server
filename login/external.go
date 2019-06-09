@@ -5,8 +5,6 @@ import (
 )
 
 var (
-	Module     = new(internal.Module)
-	ChanRPC    = internal.ChanRPC
-	GetTcpInfo = internal.GetTcpInfo
-	SetTcpInfo = internal.SetTcpInfo
+	Module  = new(internal.Module)
+	ChanRPC = internal.ChanRPC
 )

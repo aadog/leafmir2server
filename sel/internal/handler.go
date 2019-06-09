@@ -1,13 +1,13 @@
 package internal
 
 import (
+	"fmt"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
 	"leafmir2server/base"
 	"leafmir2server/conf"
 	"leafmir2server/msg"
 	"reflect"
-	"strconv"
 )
 
 func handleMsg(m interface{}, h interface{}) {
@@ -60,7 +60,8 @@ func handleSelchr(args []interface{}) {
 	servername := base.ConvertByte2String([]byte(m.Lines[1]), base.GBK)
 	log.Debug("选择角色,账号:%s 角色名称:%s", name, servername)
 
-	selchrr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_STARTPLAY, 0, 0, 0, 0, 0, 0, 0, conf.Server.TcpAddr, strconv.Itoa(conf.Server.GameTcpPort))
+	selchrr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_STARTPLAY, 0, 0, 0, 0, 0, 0, 0)
+	selchrr.Add_with_line(fmt.Sprintf("%s,%d", conf.Server.TcpAddr, conf.Server.GameTcpPort))
 	selchrr.Raw = base.EncodeString_uEDCode([]byte(selchrr.Stringlines()), []byte("tg%^&re3tb)(5G5R$7yg5.,,jIKh"))
 	a.WriteMsg(selchrr)
 }

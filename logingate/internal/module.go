@@ -22,10 +22,8 @@ func (m *Module) OnInit() {
 		CertFile:        conf.Server.CertFile,
 		KeyFile:         conf.Server.KeyFile,
 		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.LoginTCPPort),
-		LenMsgLen:       conf.LenMsgLen,
-		LittleEndian:    conf.LittleEndian,
 		Processor:       msg.Processor,
 		AgentChanRPC:    login.ChanRPC,
-		MsgParser:       &MsgParser{},
+		MsgParser:       NewMsgParser(),
 	}
 }

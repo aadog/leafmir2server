@@ -4,22 +4,30 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"github.com/name5566/leaf/network"
+	"github.com/patrickmn/go-cache"
 	"leafmir2server/base"
-	"leafmir2server/login"
 	"leafmir2server/msg"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // --------------
 // | len | data |
 // --------------
 type MsgParser struct {
+	ca *cache.Cache
 }
 
 func NewMsgParser() *MsgParser {
 	p := new(MsgParser)
+	fmt.Println("new msgparse")
+	p.ca = cache.New(10*time.Millisecond, 1*time.Microsecond)
+	p.ca.SetDefault("ResSeq", 0)
+	p.ca.SetDefault("ReqSeq", 0)
+	fmt.Println(p.ca.Get("ResSeq"))
 	return p
 }
 
@@ -32,7 +40,13 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 
 // goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
-
+	fmt.Println(p.ca.Get("ResSeq"))
+	resseq, _ := p.ca.Get("ResSeq")
+	nresseq := resseq.(int)
+	defer func() {
+		p.ca.SetDefault("ResSeq", nresseq+1)
+		fmt.Println(resseq)
+	}()
 	rd := bufio.NewReader(conn)
 	bt, err := rd.ReadBytes('!')
 	if err != nil {
@@ -49,8 +63,7 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		return nil, errors.New("最短长度为3")
 	}
 
-	ti := login.GetTcpInfo(conn.RemoteAddr().String())
-	if ti.ResSession == "" { //此时还未认证，开始解密认证信息,的token效验
+	if nresseq == 0 { //此时还未认证，开始解密认证信息,的token效验
 		nseq, err := strconv.Atoi(string(bt[1]))
 		if err != nil {
 			return nil, err
@@ -98,14 +111,19 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 
 // goroutine safe
 func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
+	reqseq, _ := p.ca.Get("ReqSeq")
+	nreqseq := reqseq.(int)
+	defer func() {
+		p.ca.SetDefault("ReqSeq", nreqseq+1)
+		fmt.Println(nreqseq)
+	}()
 	var bt []byte
 	for _, it := range args {
 		bt = append(bt, it...)
 	} //合并所有byte
 	var wbuf bytes.Buffer
 
-	ti := login.GetTcpInfo(conn.RemoteAddr().String())
-	if ti.ReqSession == "" { //此时还未认证，开始解密认证信息,的token效验
+	if nreqseq == 0 { //此时还未认证，开始解密认证信息,的token效验
 		message, err := msg.DecodeMir2Message_with_Txtbytes(bt)
 		if err != nil {
 			return err
@@ -115,7 +133,8 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 			wbuf.WriteString("#")
 			wbuf.Write(base.EncodeString_EDCode([]byte(message.Lines[0])))
 			wbuf.WriteString("!")
-			ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
+
+			//ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
 			conn.Write(wbuf.Bytes())
 		}
 	} else { //认证完成了

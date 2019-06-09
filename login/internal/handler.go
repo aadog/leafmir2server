@@ -67,10 +67,9 @@ func handleRestoken(args []interface{}) {
 	// 消息的发送者
 	a := args[1].(gate.Agent)
 
-	si := CopyTcpInfo(a.RemoteAddr().String())
 	strsign := string(m.Lines[0])
 	//log.Release("收到客户端效验信息:%s",strsign)
-	encstrsign := hex.EncodeToString(base.Md5_with([]byte(si.ReqSession)))
+	encstrsign := hex.EncodeToString(base.Md5_with([]byte(a.UserData().(string))))
 	encstrsign = strings.ToUpper(encstrsign)
 	encstrsign = hex.EncodeToString(base.Md5_with([]byte(encstrsign)))
 	encstrsign = strings.ToUpper(encstrsign)
@@ -78,8 +77,6 @@ func handleRestoken(args []interface{}) {
 		log.Debug("%s被踢下线,原因:sign效验失败", a.RemoteAddr().String())
 		a.Destroy()
 	} else {
-		//log.Debug("%s 客户端数据效验成功",a.RemoteAddr().String())
-		si.ResSession = encstrsign
-		SetTcpInfo(a.RemoteAddr().String(), &si)
+		log.Debug("%s 客户端数据效验成功", a.RemoteAddr().String())
 	}
 }

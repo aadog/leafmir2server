@@ -7,10 +7,15 @@ import (
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
-	"leafmir2server/sel"
 	"strconv"
 	"strings"
 )
+
+type tcpinfo struct {
+	ResReq int32
+}
+
+var mptcpinfo = map[string]tcpinfo{}
 
 // --------------
 // | len | data |
@@ -32,7 +37,10 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 
 // goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
-
+	defer func() {
+		_mp := mptcpinfo[conn.RemoteAddr().String()]
+		_mp.ResReq++
+	}()
 	rd := bufio.NewReader(conn)
 	bt, err := rd.ReadBytes('!')
 	if err != nil {
@@ -48,9 +56,8 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	if len(bt) < 3 {
 		return nil, errors.New("最短长度为3")
 	}
-	ti := sel.GetTcpInfo(conn.RemoteAddr().String())
-	if ti.ResSession == "" { //此时还未认证，开始解密认证信息,的token效验
 
+	if mptcpinfo[conn.RemoteAddr().String()].ResReq == 0 { //此时还未认证，开始解密认证信息,的token效验
 		nseq, err := strconv.Atoi(string(bt[1]))
 		if err != nil {
 			return nil, err
@@ -58,7 +65,6 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		_ = nseq
 		encdata := bt[2 : len(bt)-1]
 		decdata := base.DecodeString_EDCode(encdata)
-
 		m := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.CM_SELRESSESSION, 0, 0, 0, 0, 0, 0, 0)
 		m.Add_with_line(string(decdata))
 
@@ -66,10 +72,6 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-
-		si := sel.GetTcpInfo(conn.RemoteAddr().String())
-		si.ResSession = m.Lines[0]
-		sel.SetTcpInfo(conn.RemoteAddr().String(), si)
 		return encbt, nil
 	} else { //已经认证
 		nseq, err := strconv.Atoi(string(bt[1]))
@@ -141,19 +143,5 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	wbuf.Write(encbuf.Bytes())
 	wbuf.WriteString("!")
 	conn.Write(wbuf.Bytes())
-	////解密完成
-	//ti:=login.GetTcpInfo("aaa")
-	//if ti==nil{   //此时还未认证，开始解密认证信息,的token效验
-	//   sencdata:=base.EncodeString_EDCode(decdata)
-	//   var sencbyte bytes.Buffer
-	//   sencbyte.WriteString("#")
-	//   sencbyte.Write(sencdata)
-	//   sencbyte.WriteString("!")
-	//   conn.Write(sencbyte.Bytes())
-	//   fmt.Println("消息发送成功")
-	//}else{  //发送的是认证过后的包
-	//
-	//}
-	//conn.Write(sendbt)
 	return nil
 }
