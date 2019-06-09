@@ -12,7 +12,7 @@ import (
 )
 
 func Test_enc(t *testing.T) {
-	enc := []byte("#5CPnfII}v@f{h?OfAQfIMNoFEUiAVHVyYUcqaQEMz<]a=WRCwKxCwKu==/WVLiXlLfXEW=/KRG[Jh<sKA]v!")
+	enc := []byte("#kJ]sA[BasUB>v&XldGJyAvkMriRtRfDax<xVTI]Ibe]=YKAV0lLQUYoEXHY5sTipFOR5M2t0jzLks95FbaxRaUEItG8dGOWRKdIanEKQ0/iejSO1qhunNgOcoWvkNzUd/bf/3hG5BA==!")
 	debt, err := DecodeMsg(enc)
 	if err != nil {
 		log.Fatal(err.Error())

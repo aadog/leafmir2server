@@ -258,7 +258,7 @@ const (
 	CM_QUERYCHR     = 100
 	CM_NEWCHR       = 101
 	CM_DELCHR       = 102
-	CM_SELCHR       = 103
+	CM_SELCHR       = 103 //选择角色
 	CM_SELECTSERVER = 104 //辑滚甫 急琶 (+ 辑滚捞抚)
 
 	//3000 - 3099 努扼捞攫飘 捞悼 皋技瘤档 抗距
