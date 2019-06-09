@@ -23,12 +23,12 @@ func main() {
 	lconf.ProfilePath = conf.Server.ProfilePath
 
 	leaf.Run(
-		sel.Module,
-		selgate.Module,
-		logingate.Module,
-		login.Module,
-		gamegate.Module,
-		game.Module,
+		&sel.Module{},
+		&selgate.Module{},
+		&logingate.Module{},
+		&login.Module{},
+		&gamegate.Module{},
+		&game.Module{},
 	)
 
 }

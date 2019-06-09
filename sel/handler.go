@@ -1,4 +1,4 @@
-package internal
+package sel
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package internal
+package login
 
 import (
 	"github.com/name5566/leaf/module"

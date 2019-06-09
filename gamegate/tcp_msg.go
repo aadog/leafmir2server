@@ -1,4 +1,4 @@
-package internal
+package gamegate
 
 import (
 	"bufio"
@@ -6,28 +6,27 @@ import (
 	"errors"
 	"fmt"
 	"github.com/name5566/leaf/network"
-	"github.com/patrickmn/go-cache"
 	"leafmir2server/base"
 	"leafmir2server/msg"
 	"strconv"
 	"strings"
-	"time"
 )
+
+type tcpinfo struct {
+	ResReq int32
+	ReqSeq int32
+}
+
+var mptcpinfo = map[string]tcpinfo{}
 
 // --------------
 // | len | data |
 // --------------
 type MsgParser struct {
-	ca *cache.Cache
 }
 
 func NewMsgParser() *MsgParser {
 	p := new(MsgParser)
-	fmt.Println("new msgparse")
-	p.ca = cache.New(10*time.Millisecond, 1*time.Microsecond)
-	p.ca.SetDefault("ResSeq", 0)
-	p.ca.SetDefault("ReqSeq", 0)
-	fmt.Println(p.ca.Get("ResSeq"))
 	return p
 }
 
@@ -40,13 +39,11 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 
 // goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
-	fmt.Println(p.ca.Get("ResSeq"))
-	resseq, _ := p.ca.Get("ResSeq")
-	nresseq := resseq.(int)
 	defer func() {
-		p.ca.SetDefault("ResSeq", nresseq+1)
-		fmt.Println(resseq)
+		_mp := mptcpinfo[conn.RemoteAddr().String()]
+		_mp.ResReq++
 	}()
+
 	rd := bufio.NewReader(conn)
 	bt, err := rd.ReadBytes('!')
 	if err != nil {
@@ -59,38 +56,35 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	if strings.HasSuffix(string(bt), "!") == false {
 		return nil, errors.New("无法识别包尾")
 	}
-	if len(bt) < 3 {
-		return nil, errors.New("最短长度为3")
-	}
 
-	if nresseq == 0 { //此时还未认证，开始解密认证信息,的token效验
+	if mptcpinfo[conn.RemoteAddr().String()].ResReq == 0 { //如果是首次接到包
 		nseq, err := strconv.Atoi(string(bt[1]))
 		if err != nil {
 			return nil, err
 		}
-		if nseq != 0 {
-			return nil, errors.New("认证失败，req错误")
+		if nseq != 1 {
+			return nil, errors.New("nseq这时必须为1")
 		}
 		encdata := bt[2 : len(bt)-1]
-
-		decdata := base.DecodeString_EDCode(encdata)
-		decdata = base.DecodeString_uEDCode(decdata, []byte("^(YEFGH%tgb$r64ib5"))
-		tokenid := decdata
-		m := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.CM_RESTOKEN, 0, 0, 0, 0, 0, 0, 0)
-		m.Add_with_line(string(tokenid))
-
+		m := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.CM_GAMELOGIN, 0, 0, 0, 0, 0, 0, 0)
+		m.Add_with_line(string(base.DecodeString_EDCode(encdata)))
 		encbt, err := m.EncodeBytes()
 		if err != nil {
 			return nil, err
 		}
 		return encbt, nil
-	} else { //已经认证
+	} else {
+
+		if len(bt) < 44+2 {
+			return nil, errors.New("最短长度为45")
+		}
 		nseq, err := strconv.Atoi(string(bt[1]))
 		if err != nil {
 			return nil, err
 		}
 		_ = nseq
 		encdata := bt[2 : len(bt)-1]
+		fmt.Println(encdata)
 
 		//解密头部字节
 		dechd := base.Base64DecodeEx_EDcode([]byte(string(encdata[:44])), 32) //传递一个拷贝
@@ -106,24 +100,17 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		}
 		return rmsg.EncodeBytes()
 	}
-	return bt, nil
 }
 
 // goroutine safe
 func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
-	reqseq, _ := p.ca.Get("ReqSeq")
-	nreqseq := reqseq.(int)
-	defer func() {
-		p.ca.SetDefault("ReqSeq", nreqseq+1)
-		fmt.Println(nreqseq)
-	}()
 	var bt []byte
 	for _, it := range args {
 		bt = append(bt, it...)
 	} //合并所有byte
 	var wbuf bytes.Buffer
 
-	if nreqseq == 0 { //此时还未认证，开始解密认证信息,的token效验
+	if mptcpinfo[conn.RemoteAddr().String()].ReqSeq == 0 { //此时还未认证，开始解密认证信息,的token效验
 		message, err := msg.DecodeMir2Message_with_Txtbytes(bt)
 		if err != nil {
 			return err
@@ -133,7 +120,6 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 			wbuf.WriteString("#")
 			wbuf.Write(base.EncodeString_EDCode([]byte(message.Lines[0])))
 			wbuf.WriteString("!")
-
 			//ti.ReqSession = string(base.DecodeString_uEDCode([]byte(message.Lines[0]), []byte("#$Ggy%(*^45fghj@@#sqw[]KHG%^&UHBR#$ty")))
 			conn.Write(wbuf.Bytes())
 		}

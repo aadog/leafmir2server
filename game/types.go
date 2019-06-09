@@ -1,4 +1,4 @@
-package internal
+package game
 
 type StdItem struct {
 	Name             string

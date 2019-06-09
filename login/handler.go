@@ -1,4 +1,4 @@
-package internal
+package login
 
 import (
 	"encoding/hex"

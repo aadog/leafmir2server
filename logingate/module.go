@@ -1,10 +1,10 @@
-package internal
+package logingate
 
 import (
 	"fmt"
 	"github.com/name5566/leaf/gate"
 	"leafmir2server/conf"
-	"leafmir2server/game"
+	"leafmir2server/login"
 	"leafmir2server/msg"
 )
 
@@ -21,10 +21,9 @@ func (m *Module) OnInit() {
 		HTTPTimeout:     conf.HTTPTimeout,
 		CertFile:        conf.Server.CertFile,
 		KeyFile:         conf.Server.KeyFile,
-		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.GameTcpPort),
+		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.LoginTCPPort),
 		Processor:       msg.Processor,
-		AgentChanRPC:    game.ChanRPC,
-		MsgParser:       &MsgParser{},
+		AgentChanRPC:    login.ChanRPC,
+		MsgParser:       NewMsgParser(),
 	}
-
 }
