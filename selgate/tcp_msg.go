@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
@@ -144,4 +145,10 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	wbuf.WriteString("!")
 	conn.Write(wbuf.Bytes())
 	return nil
+}
+func (p *MsgParser) Conn(conn *network.TCPConn) {
+
+}
+func (p *MsgParser) Close(conn *network.TCPConn) {
+	fmt.Println("已关闭conn")
 }

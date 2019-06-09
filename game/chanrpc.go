@@ -12,7 +12,6 @@ func init() {
 
 func rpcNewAgent(args []interface{}) {
 	a := args[0].(gate.Agent)
-
 	log.Debug("gameserver,来自客户端连接:%s", a.RemoteAddr())
 }
 

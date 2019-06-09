@@ -165,3 +165,10 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	//conn.Write(sendbt)
 	return nil
 }
+func (p *MsgParser) Conn(conn *network.TCPConn) {
+	fmt.Println(conn.RemoteAddr().String())
+	fmt.Println("conn已经连接")
+}
+func (p *MsgParser) Close(conn *network.TCPConn) {
+	fmt.Println("已关闭conn")
+}

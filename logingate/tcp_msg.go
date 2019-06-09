@@ -40,7 +40,7 @@ func (p *MsgParser) DecodeAesMessage_with_bytes(_in []byte) (*msg.Mir2Message, e
 
 // goroutine safe
 func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
-	fmt.Println(p.ca.Get("ResSeq"))
+
 	resseq, _ := p.ca.Get("ResSeq")
 	nresseq := resseq.(int)
 	defer func() {
@@ -107,6 +107,10 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		return rmsg.EncodeBytes()
 	}
 	return bt, nil
+}
+func (p *MsgParser) Conn(conn *network.TCPConn) {
+	fmt.Println(conn.RemoteAddr().String())
+	fmt.Println("conn已经连接")
 }
 
 // goroutine safe
@@ -178,4 +182,7 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	//}
 	//conn.Write(sendbt)
 	return nil
+}
+func (p *MsgParser) Close(conn *network.TCPConn) {
+	fmt.Println("已关闭conn")
 }

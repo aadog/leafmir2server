@@ -24,6 +24,6 @@ func (m *Module) OnInit() {
 		TCPAddr:         fmt.Sprintf("%s:%d", conf.Server.TcpAddr, conf.Server.SelTCPPort),
 		Processor:       msg.Processor,
 		AgentChanRPC:    sel.ChanRPC,
-		MsgParser:       &MsgParser{},
+		MsgParser:       NewMsgParser(),
 	}
 }
