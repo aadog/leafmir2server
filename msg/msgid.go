@@ -346,6 +346,7 @@ const (
 	CM_TAG_REJECT_DELETE = 1057 // 芭何磊 昏力
 
 	CM_CLIENT_CHECKTIME = 1100
+	CM_GAMESESSION      = 8887 //服务器session验证
 	CM_GAMELOGIN        = 8888
 	SM_REQTOKEN         = 8889 //服务器token获取
 	CM_RESTOKEN         = 8890 //客户端token应答

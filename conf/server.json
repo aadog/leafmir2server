@@ -3,7 +3,7 @@
   "LogPath": "",
   "LoginTCPPort": 7000,
   "SelTCPPort": 7001,
-  "GameTcpPort": 7004,
+  "GameTcpPort": 7008,
   "TCPADDR":"127.0.0.1",
   "MaxConnNum": 20000
 }

@@ -1,9 +1,9 @@
 package game
 
 import (
-	"fmt"
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
+	"leafmir2server/base"
 	"leafmir2server/msg"
 	"reflect"
 )
@@ -14,9 +14,19 @@ func handleMsg(m interface{}, h interface{}) {
 
 func init() {
 
+	handleMsg(&msg.GameSessionMessage{}, handleGameSession)
 	handleMsg(&msg.GameLoginMessage{}, handleGamelogin)
 	handleMsg(&msg.LoginnoticeokMessage{}, handleLoginnoticeok)
 	handleMsg(&msg.QueryBagitemsMessage{}, handleQuerybagitems)
+}
+
+func handleGameSession(args []interface{}) {
+	// 收到的 Hello 消息
+	m := args[0].(*msg.GameSessionMessage)
+	// 消息的发送者
+	a := args[1].(gate.Agent)
+	strsession := m.Lines[0]
+	log.Debug("%s:发送来的session:%s", a.RemoteAddr().String(), strsession)
 }
 
 func handleGamelogin(args []interface{}) {
@@ -24,12 +34,12 @@ func handleGamelogin(args []interface{}) {
 	m := args[0].(*msg.GameLoginMessage)
 	// 消息的发送者
 	a := args[1].(gate.Agent)
-	fmt.Println(m)
 
-	//log.Debug("登录游戏服务器请求 账号:%s 名字:%s 版本:%s", m.Lines[0], m.Lines[1], m.Lines[2])
+	strname := base.ConvertByte2String([]byte(m.Lines[1]), base.GBK)
+	log.Debug("%s:登录游戏服务器请求 账号:%s 名字:%s 版本:%s", a.RemoteAddr().String(), m.Lines[0], strname, m.Lines[2])
 
-	notice := `测试公告`
-	gameloginr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_SENDNOTICE, int32(len(notice)), 0, 0, 0, 0, 0, 0, notice)
+	notice := `ABody '\\\\　　　　　 健康游戏忠告 \\\　　注意自身保护　谨防受骗上当\\　　适度游戏益脑　沉迷游戏伤身\      \　　合理安排时间　享受健康生活\'`
+	gameloginr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_SENDNOTICE, 2000, 0, 0, 0, 0, 0, 0, notice)
 	a.WriteMsg(gameloginr)
 }
 func handleLoginnoticeok(args []interface{}) {
