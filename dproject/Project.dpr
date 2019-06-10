@@ -15,7 +15,8 @@ uses
   Classes,
   uEDCode in 'uEDCode.pas',
   Unitapi in 'Unitapi.pas',
-  EDcode in 'EDcode.pas';
+  EDcode in 'EDcode.pas',
+  Crc in 'Crc.pas';
 
 {$R *.res}
 begin

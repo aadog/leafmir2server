@@ -20,6 +20,7 @@ var (
 	cDecryptAES_EDcode     = c_project.NewProc("cDecryptAES_EDcode")
 	cEncryptAES_EDcode     = c_project.NewProc("cEncryptAES_EDcode")
 	cBase64Encode_EDcode   = c_project.NewProc("cBase64Encode_EDcode")
+	cCrc32                 = c_project.NewProc("cCrc32")
 )
 
 func EncodeString_uEDCode(_in []byte, _key []byte) []byte {
@@ -180,6 +181,13 @@ func Base64Encode_EDcode(_in []byte, _len int) []byte {
 		uintptr(_len),
 	)
 	return r
+}
+func Crc32(_in []byte) int {
+	r, _, _ := cCrc32.Call(
+		uintptr(unsafe.Pointer(&_in[0])),
+		uintptr(len(_in)),
+	)
+	return int(r)
 }
 
 func init() {

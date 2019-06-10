@@ -119,10 +119,16 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 		sbuf := base.EncodeString_EDCode([]byte(message.Stringlines()))
 		encbuf.Write(sbuf)
 	}
-	wbuf.WriteString("#")
 	wbuf.Write(encbuf.Bytes())
-	wbuf.WriteString("!")
-	conn.Write(wbuf.Bytes())
+
+	gamepackbt, err := base.EncGamePacket(wbuf.Bytes())
+	if err != nil {
+		return err
+	}
+	//wbuf.WriteString("#")
+	//wbuf.Write(encbuf.Bytes())
+	//wbuf.WriteString("!")
+	conn.Write(gamepackbt)
 	return nil
 }
 func (p *MsgParser) Conn(conn *network.TCPConn) {

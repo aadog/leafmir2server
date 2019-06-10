@@ -5,7 +5,8 @@ uses
 SysUtils,
 Classes,
 uEDCode,
-EDCode;
+EDCode,
+Crc;
 
 implementation
 
@@ -138,6 +139,10 @@ procedure cSetPassWord_EDcode(_in:PByte);stdcall;
 begin
     EDCode.SetPassWord(PAnsiChar(_in));
 end;
+function cCrc32(Buf: PByte; Len: Integer): Cardinal;stdcall
+begin
+   Result:=Crc.Crc32(Buf,Len);
+end;
 exports
 cEncodeString_uEDCode,
 cDecodeString_uEDCode,
@@ -149,7 +154,8 @@ cBase64DecodeEx_EDcode,
 cSetPassWord_EDcode,
 cDecryptAES_EDcode,
 cEncryptAES_EDcode,
-cBase64Encode_EDcode;
+cBase64Encode_EDcode,
+cCrc32;
 
 
 end.

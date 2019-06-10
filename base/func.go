@@ -1,7 +1,9 @@
 package base
 
 import (
+	"bytes"
 	"crypto/md5"
+	"encoding/binary"
 	"fmt"
 	"golang.org/x/text/encoding/simplifiedchinese"
 )
@@ -138,4 +140,31 @@ func Reskey(_s string) string {
 }
 func Reqkey(_s string) string {
 	return fmt.Sprintf("%s_Req", _s)
+}
+func EncGamePacket(_in []byte) ([]byte, error) {
+	nin := len(_in)
+	crc := Crc32(_in)
+	wbuf := &bytes.Buffer{}
+	err := binary.Write(wbuf, binary.LittleEndian, uint16(0xffcc))
+	if err != nil {
+		return nil, err
+	}
+	err = binary.Write(wbuf, binary.LittleEndian, uint16(crc))
+	if err != nil {
+		return nil, err
+	}
+	err = binary.Write(wbuf, binary.LittleEndian, uint32(uint32(0xFFFFFF&nin)|0xFA000000))
+	if err != nil {
+		return nil, err
+	}
+
+	err = wbuf.WriteByte(0x00)
+	if err != nil {
+		return nil, err
+	}
+	_, err = wbuf.Write(_in)
+	if err != nil {
+		return nil, err
+	}
+	return wbuf.Bytes(), nil
 }
