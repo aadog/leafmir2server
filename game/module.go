@@ -176,7 +176,6 @@ func DecodeM2project_with_path(_path string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	debtm2project, err := DoZlibUnCompress(dbtstream)
 	if err != nil {
 		return nil, err

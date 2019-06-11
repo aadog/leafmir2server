@@ -10,9 +10,9 @@ Crc;
 
 implementation
 
-
 procedure cDecodeStream_uEDCode(_instm:pbyte;_inlen:Integer;_outstm:pbyte;var _outlen:integer;_key:PAnsiChar);stdcall;
 var
+tmpbuf:Tbytes;
 key:string;
 instm:TMemoryStream;
 outstm:TMemoryStream;
@@ -28,7 +28,7 @@ begin
        if _outstm<>nil then
        begin
            Move(outstm.Memory^, _outstm^, outstm.Size);
-       end;  
+       end;
        _outlen := outstm.Size;
     finally
       instm.Free;
@@ -139,7 +139,7 @@ procedure cSetPassWord_EDcode(_in:PByte);stdcall;
 begin
     EDCode.SetPassWord(PAnsiChar(_in));
 end;
-function cCrc32(Buf: PByte; Len: Integer): Cardinal;stdcall
+function cCrc32(Buf: PByte; Len: Integer): Cardinal;stdcall;
 begin
    Result:=Crc.Crc32(Buf,Len);
 end;

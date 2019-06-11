@@ -2,7 +2,7 @@ unit EDcode;
 
 interface
 uses
-uTypes,Classes,SysUtils,Windows;
+Classes,SysUtils,Windows;
 
 type
   TAESBuffer = array [0..15] of byte;
@@ -13,8 +13,8 @@ var
     FECKey128,
     FDCKey128: TAESExpandedKey128;
 
-function DeCodeString(const Str: PPlatfromString): String;
-function EncodeString(const Str: String): PPlatfromString;
+function DeCodeString(const Str: string): String;
+function EncodeString(const Str: String): ansistring;
 procedure Base64Decode(const ABase64Input: AnsiString; out ABuffer: PAnsiChar; out ADataLen, ABufferLen: Integer);
 procedure Base64Encode(const ABuffer: PAnsiChar; ADataLen: Integer; out Result: AnsiString);
 procedure Base64DecodeEx(const ABase64Input: AnsiString; ABuffer: PAnsiChar; ADataLen: Integer);
@@ -190,7 +190,7 @@ begin
   SetLength(Result, ALength);
   Move(ABuff^, Result[1], ALength);
 end;
-function DeCodeString(const Str: PPlatfromString): String;
+function DeCodeString(const Str: string): String;
 var
   AData: PAnsiChar;
   ADataLen, ABufferLen: Integer;
@@ -206,13 +206,14 @@ begin
     end;
   end;
 end;
-function EncodeString(const Str: String): PPlatfromString;
+function EncodeString(const Str: String): ansistring;
 var
   S: AnsiString;
 begin
   Result := '';
   if Str <> '' then
   begin
+
       //Result:=Str;
     S := UTF8Encode(Str);
     Base64Encode(PAnsiChar(S), Length(S), Result);

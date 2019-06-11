@@ -144,6 +144,7 @@ func Reqkey(_s string) string {
 func EncGamePacket(_in []byte) ([]byte, error) {
 	nin := len(_in)
 	crc := Crc32(_in)
+	fmt.Println(crc)
 	wbuf := &bytes.Buffer{}
 	err := binary.Write(wbuf, binary.LittleEndian, uint16(0xffcc))
 	if err != nil {

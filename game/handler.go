@@ -48,11 +48,20 @@ func handleLoginnoticeok(args []interface{}) {
 	m := args[0].(*msg.LoginnoticeokMessage)
 	// 消息的发送者
 	a := args[1].(gate.Agent)
+	_ = a
 	_ = m
-	btbuf := []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	loginnoticeokr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_LOGON, 1000, 273, 590, ((1 << 8) | 1), 0, 0, 0, string(btbuf))
-	a.WriteMsg(loginnoticeokr)
+	//strusername:="asdfsadf\\\\\\"
+	//loginnoticeokr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_USERNAME, 734707136, 255, 0, 0, -1, 0, 0, string(strusername))
+	//a.WriteMsg(loginnoticeokr)
 
+	//发送人物出生地图
+	newmapr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_NEWMAP, 0, 649, 626, 0, 0, 0, 0)
+	mainmapname := "0" //比奇省
+	newmapr.Add_with_line(mainmapname)
+	a.WriteMsg(newmapr)
+
+	//logonr:=msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_LOGON,260964368,41026185,7,0,11966752,0,0)
+	//
 }
 func handleQuerybagitems(args []interface{}) {
 	// 收到的 Hello 消息

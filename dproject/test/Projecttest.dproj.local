@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.559,C:\src\src\leafmir2server\dproject\test\Projecttest.dproj=C:\Users\fbi\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.999,=C:\src\src\leafmir2server\dproject\test\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.510,C:\src\src\leafmir2server\dproject\test\Unit1.pas=C:\src\src\leafmir2server\dproject\test\Unittest.pas</Transaction>
-  </Transactions>
-</BorlandProject>

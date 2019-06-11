@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	c_project              = syscall.NewLazyDLL("./project.dll")
+	c_project = syscall.NewLazyDLL("./project.dll")
+	//c_project              = syscall.NewLazyDLL("./x/project.dll")
 	cEncodeStream_uEDCode  = c_project.NewProc("cEncodeStream_uEDCode")
 	cDecodeStream_uEDCode  = c_project.NewProc("cDecodeStream_uEDCode")
 	cEncodeString_uEDCode  = c_project.NewProc("cEncodeString_uEDCode")
@@ -182,12 +183,12 @@ func Base64Encode_EDcode(_in []byte, _len int) []byte {
 	)
 	return r
 }
-func Crc32(_in []byte) int {
+func Crc32(_in []byte) uint32 {
 	r, _, _ := cCrc32.Call(
 		uintptr(unsafe.Pointer(&_in[0])),
 		uintptr(len(_in)),
 	)
-	return int(r)
+	return uint32(r)
 }
 
 func init() {

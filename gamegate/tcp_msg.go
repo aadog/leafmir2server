@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
@@ -84,13 +85,18 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		dechd1 := base.DecryptAES_EDcode(dechd[:16])
 		dechd2 := base.DecryptAES_EDcode(dechd[16:])
 
-		decd2 := base.DecodeString_EDCode([]byte(string(encdata[44:]))) //这里转string可以copy一次
-		decbt := append(dechd1, dechd2...)
-		decbt = append(decbt, decd2...)
+		var decbt []byte
+		decbt = append(dechd1, dechd2...)
+		if len(encdata) > 44 {
+			decd2 := base.DecodeString_EDCode([]byte(string(encdata[44:]))) //这里转string可以copy一次
+			decbt = append(decbt, decd2...)
+		}
+
 		rmsg, err := msg.DecodeMir2Message_with_bytes(decbt)
 		if err != nil {
 			return nil, err
 		}
+		fmt.Println(rmsg)
 		return rmsg.EncodeBytes()
 	}
 }
@@ -116,6 +122,7 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	enchd := base.Base64Encode_EDcode(decchd[:32], 44)
 	encbuf.Write(enchd)
 	if message.Stringlines() != "" {
+		fmt.Println(message.Stringlines())
 		sbuf := base.EncodeString_EDCode([]byte(message.Stringlines()))
 		encbuf.Write(sbuf)
 	}

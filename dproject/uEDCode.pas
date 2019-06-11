@@ -8,7 +8,7 @@ procedure Base64Encode(const ABuffer: PAnsiChar; ADataLen: Integer; out Result: 
 procedure Base64Decode(const ABase64Input: AnsiString; out ABuffer: PAnsiChar; out ADataLen, ABufferLen: Integer);
 function EncodeString(const Source, Key: String): AnsiString;
 function DecodeString(const Source: AnsiString; const Key: String): String;
-procedure DecodeStream(InStream, OutStream: TStream; const Key: String);
+procedure DecodeStream(InStream, OutStream: TMemoryStream; const Key: String);
 procedure EncodeStream(InStream, OutStream: TStream; const Key: String);
 implementation
 const
@@ -157,7 +157,12 @@ begin
     FreeAndNil(ALibrary);
   end;
 end;
-procedure DecodeStream(InStream, OutStream: TStream; const Key: String);
+function BytestoHexString(ABytes: TBytes; len: Integer): AnsiString;
+begin
+  SetLength(Result, len*2);
+  BinToHex(@ABytes[0], PAnsiChar(Result), len);
+end;
+procedure DecodeStream(InStream, OutStream: TMemoryStream; const Key: String);
 var
   ACode: TCodeC;
   ALibrary: TCryptographicLibrary;
