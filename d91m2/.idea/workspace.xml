@@ -2,53 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1eb6d6aa-b193-4170-9452-dd43eded7f23" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Project.dll" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../d91m2.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../d91m2.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../d91m2.rsm" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Crc.pas" beforeDir="false" afterPath="$PROJECT_DIR$/Crc.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDcode.pas" beforeDir="false" afterPath="$PROJECT_DIR$/EDcode.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/d91m2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/d91m2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/DCPtwofish_LB3Modified.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/DCPtwofish_LB3Modified.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_3DES.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_3DES.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_AES.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_AES.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_Asymetric.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_Asymetric.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_Base64.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_Base64.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_BaseNonVisualComponent.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_BaseNonVisualComponent.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_BinaryUtils.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_BinaryUtils.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_BlockCipher.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_BlockCipher.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_BlowFish.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_BlowFish.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CBC.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CBC.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CFB_8Bit.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CFB_8Bit.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CFB_Block.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CFB_Block.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CTR.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CTR.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CipherUtils.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CipherUtils.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_Codec.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_Codec.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CodecIntf.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CodecIntf.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_CryptographicLibrary.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_CryptographicLibrary.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_DES.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_DES.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_ECB.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_ECB.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_Hash.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_Hash.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_HashDsc.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_HashDsc.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_HugeCardinal.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_HugeCardinal.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_HugeCardinalUtils.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_HugeCardinalUtils.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_IntegerUtils.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_IntegerUtils.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_MD5.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_MD5.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_MemoryStreamPool.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_MemoryStreamPool.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_OFB.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_OFB.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_PCBC.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_PCBC.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_PointerArithmetic.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_PointerArithmetic.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_RSA_Engine.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_RSA_Engine.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_RSA_Primitives.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_RSA_Primitives.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_Random.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_Random.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_SHA1.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_SHA1.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_SHA2.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_SHA2.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_SimpleBlockCipher.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_SimpleBlockCipher.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_StreamCipher.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_StreamCipher.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_StreamToBlock.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_StreamToBlock.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_StreamUtils.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_StreamUtils.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_TwoFish.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_TwoFish.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lockbox3/uTPLb_XXTEA.pas" beforeDir="false" afterPath="$PROJECT_DIR$/lockbox3/uTPLb_XXTEA.pas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uEDCode.pas" beforeDir="false" afterPath="$PROJECT_DIR$/uEDCode.pas" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/d91m2.dproj.local" beforeDir="false" afterPath="$PROJECT_DIR$/d91m2.dproj.local" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/d91m2.identcache" beforeDir="false" afterPath="$PROJECT_DIR$/d91m2.identcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/d91m2.stat" beforeDir="false" afterPath="$PROJECT_DIR$/d91m2.stat" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +23,7 @@
         <entry file="file://$PROJECT_DIR$/api.pas">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="103">
-              <caret line="148" column="21" lean-forward="true" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
+              <caret line="127" column="58" selection-start-line="127" selection-start-column="58" selection-end-line="127" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -148,7 +106,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,6 +117,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -246,17 +204,19 @@
       <workItem from="1560295090280" duration="78000" />
       <workItem from="1560342684784" duration="219000" />
       <workItem from="1560343088505" duration="632000" />
+      <workItem from="1560343877233" duration="240000" />
+      <workItem from="1560344327233" duration="156000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2224000" />
+    <option name="totallyTimeSpent" value="2620000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19001086" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19761129" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -272,8 +232,8 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.4267101" side_tool="true" visible="true" weight="0.3297491" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.57328993" weight="0.3297491" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.42725298" side_tool="true" visible="true" weight="0.3297491" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.572747" visible="true" weight="0.3297491" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Version Control" order="12" />
       <window_info anchor="bottom" id="Flutter Performance" order="13" side_tool="true" />
@@ -324,13 +284,6 @@
           <folding>
             <element signature="e#25#117#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/d91m2.dpr">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="18" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -702,10 +655,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/d91m2.dpr">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="18" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api.pas">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
-          <caret line="148" column="21" lean-forward="true" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
+          <caret line="127" column="58" selection-start-line="127" selection-start-column="58" selection-end-line="127" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -766,6 +726,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
