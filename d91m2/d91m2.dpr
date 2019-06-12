@@ -14,7 +14,9 @@ uses
   System.SysUtils,
   System.Classes,
   api in 'api.pas',
-  uEDCode in 'uEDCode.pas';
+  uEDCode in 'uEDCode.pas',
+  EDcode in 'EDcode.pas',
+  Crc in 'Crc.pas';
 
 {$R *.res}
 

@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
@@ -96,7 +95,7 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println(rmsg)
+		//fmt.Println(rmsg)
 		return rmsg.EncodeBytes()
 	}
 }
@@ -122,7 +121,6 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 	enchd := base.Base64Encode_EDcode(decchd[:32], 44)
 	encbuf.Write(enchd)
 	if message.Stringlines() != "" {
-		fmt.Println(message.Stringlines())
 		sbuf := base.EncodeString_EDCode([]byte(message.Stringlines()))
 		encbuf.Write(sbuf)
 	}

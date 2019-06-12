@@ -38,7 +38,7 @@ func handleGamelogin(args []interface{}) {
 	strname := base.ConvertByte2String([]byte(m.Lines[1]), base.GBK)
 	log.Debug("%s:登录游戏服务器请求 账号:%s 名字:%s 版本:%s", a.RemoteAddr().String(), m.Lines[0], strname, m.Lines[2])
 
-	notice := `\\\\　　　　　 健康游戏忠告 \\\　　注意自身保护　谨防受骗上当\\　　适度游戏益脑　沉迷游戏伤身\      \　　合理安排时间　享受健康生活\`
+	notice := `游戏公告`
 	notice = base.ConvertString2Byte(notice, base.GBK)
 	gameloginr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_SENDNOTICE, 2000, 0, 0, 0, 0, 0, 0, notice)
 	a.WriteMsg(gameloginr)
@@ -53,7 +53,7 @@ func handleLoginnoticeok(args []interface{}) {
 	//strusername:="asdfsadf\\\\\\"
 	//loginnoticeokr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_USERNAME, 734707136, 255, 0, 0, -1, 0, 0, string(strusername))
 	//a.WriteMsg(loginnoticeokr)
-
+	log.Debug("客户端点击公告按钮")
 	//发送人物出生地图
 	newmapr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_NEWMAP, 0, 649, 626, 0, 0, 0, 0)
 	mainmapname := "0" //比奇省

@@ -2,7 +2,6 @@ package base
 
 import (
 	"errors"
-	"github.com/name5566/leaf/log"
 	. "github.com/ying32/govcl/vcl"
 	"syscall"
 	"unsafe"
@@ -200,7 +199,7 @@ func Crc32(_in []byte) uint32 {
 func init() {
 	err := c_project.Load()
 	if err != nil {
-		log.Fatal(err.Error())
+		panic(err)
 	}
 	//初始化后直接设置密码
 	SetPassWord_EDcode([]byte("glaciersoftware@126.com"))
