@@ -35,7 +35,7 @@ unit uTPLb_RSA_Primitives;
 
 interface
 uses
-  uTPLB_HugeCardinal, Classes, uTPLb_MemoryStreamPool, uTPLb_StreamCipher,
+  uTPLB_HugeCardinal, System.Classes, uTPLb_MemoryStreamPool, uTPLb_StreamCipher,
   uTPLb_BlockCipher, uTPLb_Hash;
 
 function I2OSP( x: THugeCardinal; xLen: integer;
@@ -220,8 +220,8 @@ implementation
 
 
 
-uses uTPLb_PointerArithmetic, SysUtils, Math, uTPLb_SHA1,
-     uTPLb_HashDsc, uTPLb_StreamUtils, SyncObjs, uTPLb_Random, uTPLb_I18n
+uses uTPLb_PointerArithmetic, System.SysUtils, System.Math, uTPLb_SHA1,
+     uTPLb_HashDsc, uTPLb_StreamUtils, System.SyncObjs, uTPLb_Random, uTPLb_I18n
 {$IFDEF SI}
   , SmartInspect,
   SiAuto

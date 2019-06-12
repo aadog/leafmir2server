@@ -2,8 +2,8 @@ unit uEDCode;
 
 interface
 uses
-Classes,
-uTPLb_Codec,uTPLb_CryptographicLibrary,uTPLb_Constants,SysUtils;
+System.Classes,
+uTPLb_Codec,uTPLb_CryptographicLibrary,uTPLb_Constants,System.SysUtils;
 procedure Base64Encode(const ABuffer: PAnsiChar; ADataLen: Integer; out Result: AnsiString);
 procedure Base64Decode(const ABase64Input: AnsiString; out ABuffer: PAnsiChar; out ADataLen, ABufferLen: Integer);
 function EncodeString(const Source, Key: String): AnsiString;

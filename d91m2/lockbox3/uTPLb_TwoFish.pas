@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_TwoFish;
 interface
-uses Classes, uTPLb_BlockCipher, uTPLb_StreamCipher, uTPLb_Decorators;
+uses System.Classes, uTPLb_BlockCipher, uTPLb_StreamCipher, uTPLb_Decorators;
 
 type
 {$IF compilerversion >= 211}
@@ -92,7 +92,7 @@ implementation
 
 
 
-uses uTPLb_Constants, SysUtils, DCPtwofish_LB3Modified, Math
+uses uTPLb_Constants, System.SysUtils, DCPtwofish_LB3Modified, System.Math
 {$IF compilerversion <= 17}
 , uTPLb_D7Compatibility
 {$IFEND}

@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_HashDsc;
 interface
-uses Classes, uTPLb_StreamCipher;
+uses System.Classes, uTPLb_StreamCipher;
 
 type
 

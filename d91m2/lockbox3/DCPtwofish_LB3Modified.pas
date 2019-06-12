@@ -30,7 +30,7 @@ unit DCPtwofish_LB3Modified;
 
 interface
 uses
-  Classes, Sysutils, windows;
+  System.Classes, System.Sysutils, winapi.windows;
 
 const
   INPUTWHITEN= 0;

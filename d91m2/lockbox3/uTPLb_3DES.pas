@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_3DES;
 interface
-uses Classes, uTPLb_BlockCipher, uTPLb_StreamCipher;
+uses System.Classes, uTPLb_BlockCipher, uTPLb_StreamCipher;
 
 type
 
@@ -77,7 +77,7 @@ implementation
 
 
 
-uses uTPLb_Constants, uTPLb_DES, SysUtils, uTPLb_I18n;
+uses uTPLb_Constants, uTPLb_DES, System.SysUtils, uTPLb_I18n;
 { TDES }
 
 

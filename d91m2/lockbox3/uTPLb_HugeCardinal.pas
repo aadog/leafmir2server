@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_HugeCardinal;
 interface
-uses Classes, uTPLb_IntegerUtils, uTPLb_MemoryStreamPool;
+uses System.Classes, uTPLb_IntegerUtils, uTPLb_MemoryStreamPool;
 
 type
      {$define SI}
@@ -202,8 +202,8 @@ implementation
 
 
 
-uses SysUtils, uTPLb_StreamUtils, Math, uTPlb_Random,uTPLb_I18n,
-     uTPLb_PointerArithmetic, windows;
+uses System.SysUtils, uTPLb_StreamUtils,System. Math, uTPlb_Random,uTPLb_I18n,
+     uTPLb_PointerArithmetic, winapi.windows;
 
 
   procedure SafeAssign( Destin, Source: THugeCardinal);

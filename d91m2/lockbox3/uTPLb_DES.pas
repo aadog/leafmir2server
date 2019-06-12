@@ -30,11 +30,11 @@ and earlier was TurboPower Software.
 
 unit uTPLb_DES;
 interface
-uses Classes, uTPLb_BlockCipher, uTPLb_StreamCipher;
+uses System.Classes, uTPLb_BlockCipher, uTPLb_StreamCipher;
 
 type
 
-TDES = class( TInterfacedObject,
+TDES = class( System.TInterfacedObject,
     IBlockCipher, ICryptoGraphicAlgorithm)
   private
     function  DisplayName: string;
@@ -86,7 +86,7 @@ implementation
 
 
 
-uses uTPLb_Constants, Windows, SysUtils, uTPLb_I18n;
+uses uTPLb_Constants, winapi.Windows, System.SysUtils, uTPLb_I18n;
 
 { Information Resources
   =====================

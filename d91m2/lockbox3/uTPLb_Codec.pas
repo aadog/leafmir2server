@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_Codec;
 interface
-uses Classes, uTPLb_StreamCipher, uTPLb_BlockCipher, uTPLb_Asymetric,
+uses System.Classes, uTPLb_StreamCipher, uTPLb_BlockCipher, uTPLb_Asymetric,
      uTPLb_BaseNonVisualComponent, uTPLb_CryptographicLibrary, uTPLb_CodecIntf,
      uTPLb_HashDsc, uTPLb_Hash, uTPLb_StreamUtils;
 
@@ -317,10 +317,10 @@ implementation
 
 
 
-uses SysUtils, Math, uTPLB_SHA1, uTPLb_ECB, uTPLb_Random, uTPLb_Decorators,
+uses System.SysUtils, System.Math, uTPLB_SHA1, uTPLb_ECB, uTPLb_Random, uTPLb_Decorators,
      uTPLb_BinaryUtils, uTPLb_I18n
 {$IF CompilerVersion >= 211}
-     , Rtti
+     , System.Rtti
 {$IFEND}
      ;
 

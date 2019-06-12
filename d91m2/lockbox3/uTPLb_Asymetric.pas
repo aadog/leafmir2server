@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_Asymetric;
 interface
-uses Classes, uTPLb_StreamCipher, uTPLb_CodecIntf;
+uses System.Classes, uTPLb_StreamCipher, uTPLb_CodecIntf;
 
 type
 
@@ -207,8 +207,8 @@ implementation
 
 
 
-uses SysUtils, uTPLb_StreamToBlock, uTPLb_AES, uTPLb_CBC, uTPLb_Codec,
-     uTPLb_PointerArithmetic, Math;
+uses System.SysUtils, uTPLb_StreamToBlock, uTPLb_AES, uTPLb_CBC, uTPLb_Codec,
+     uTPLb_PointerArithmetic, System.Math;
 { TAsymetricKeyPair }
 
 procedure TAsymetricKeyPair.Burn;

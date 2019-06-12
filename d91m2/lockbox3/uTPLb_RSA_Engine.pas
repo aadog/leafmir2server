@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_RSA_Engine;
 interface
-uses Classes, uTPLb_StreamCipher, uTPLb_Asymetric, uTPLb_Codec, uTPLb_CodecIntf,
+uses System.Classes, uTPLb_StreamCipher, uTPLb_Asymetric, uTPLb_Codec, uTPLb_CodecIntf,
      uTPLb_HugeCardinal, uTPLb_MemoryStreamPool;
 
 type
@@ -194,7 +194,7 @@ implementation
 
 
 
-uses uTPLb_RSA_Primitives, SysUtils, Math, uTPLb_HugeCardinalUtils,
+uses uTPLb_RSA_Primitives, System.SysUtils, System.Math, uTPLb_HugeCardinalUtils,
      uTPLB_Constants, uTPLb_I18n;
 
 { TRSA_Engine }

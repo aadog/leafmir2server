@@ -30,8 +30,8 @@ and earlier was TurboPower Software.
 
 unit uTPLb_CryptographicLibrary;
 interface
-uses Classes, uTPLb_BaseNonVisualComponent, uTPLb_StreamCipher,
-     uTPLb_BlockCipher, contnrs, uTPLb_HashDsc, uTPLb_SimpleBlockCipher;
+uses System.Classes, uTPLb_BaseNonVisualComponent, uTPLb_StreamCipher,
+     uTPLb_BlockCipher, System.contnrs, uTPLb_HashDsc, uTPLb_SimpleBlockCipher;
 
 type
 
@@ -245,7 +245,7 @@ implementation
 
 
 uses
-  Math, SysUtils, uTPLb_I18n,
+  System.Math, System.SysUtils, uTPLb_I18n,
 
   // Chain modes:
   uTPLb_ECB,         uTPLb_CBC,      uTPLb_PCBC,

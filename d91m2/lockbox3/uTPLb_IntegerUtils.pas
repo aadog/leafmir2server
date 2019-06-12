@@ -62,7 +62,7 @@ implementation
 
 
 
-uses SysUtils;
+uses System.SysUtils;
 
 
 {.$define PUREPASCAL}

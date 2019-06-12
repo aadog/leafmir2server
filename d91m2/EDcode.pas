@@ -2,7 +2,7 @@ unit EDcode;
 
 interface
 uses
-Classes,SysUtils,Windows;
+  System.Classes,System.SysUtils,winapi.Windows;
 
 type
   TAESBuffer = array [0..15] of byte;

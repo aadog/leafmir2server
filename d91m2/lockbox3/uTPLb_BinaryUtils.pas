@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_BinaryUtils;
 interface
-uses Classes, uTPLb_IntegerUtils;
+uses System.Classes, uTPLb_IntegerUtils;
 
 function SwapEndien_u32( Value: uint32): uint32;
 function SwapEndien_s64( Value: int64   ): int64;
@@ -62,7 +62,7 @@ implementation
 
 
 
-uses SysUtils;
+uses System.SysUtils;
 
 function SwapEndien_u32( Value: uint32): uint32;
 begin

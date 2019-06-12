@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_StreamUtils;
 interface
-uses Classes;
+uses System.Classes;
 
 const
   Base64Chars: ansistring =
@@ -102,7 +102,7 @@ implementation
 
 
 
-uses Math, SysUtils, uTPLb_Random, uTPLb_IntegerUtils;
+uses System.Math, System.SysUtils, uTPLb_Random, uTPLb_IntegerUtils;
 
 
 

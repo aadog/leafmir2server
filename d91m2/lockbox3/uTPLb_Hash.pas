@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_Hash;
 interface
-uses Classes, uTPLb_StreamCipher,
+uses System.Classes, uTPLb_StreamCipher,
      uTPLb_BaseNonVisualComponent, uTPLb_CryptographicLibrary,
      uTPLb_HashDsc;
 
@@ -188,7 +188,7 @@ implementation
 
 
 
-uses SysUtils, uTPLb_StreamUtils, uTPLb_BinaryUtils, Math;
+uses System.SysUtils, uTPLb_StreamUtils, uTPLb_BinaryUtils, System.Math;
 
 
 

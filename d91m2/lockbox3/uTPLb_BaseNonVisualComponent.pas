@@ -31,7 +31,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_BaseNonVisualComponent;
 interface
-uses Classes;
+uses System.Classes;
 
 type
 ITPLb_Component = interface

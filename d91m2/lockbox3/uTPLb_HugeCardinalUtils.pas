@@ -128,8 +128,8 @@ implementation
 
 
 
-uses SysUtils, Classes, uTPLb_PointerArithmetic, uTPLb_IntegerUtils,
-     uTPLb_I18n, Math;
+uses System.SysUtils, System.Classes, uTPLb_PointerArithmetic, uTPLb_IntegerUtils,
+     uTPLb_I18n, System.Math;
 
 const
   SmallPrimeSetCardinality = 200;

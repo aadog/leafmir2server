@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_MemoryStreamPool;
 interface
-uses Classes;
+uses System.Classes;
 
 type
 
@@ -63,7 +63,7 @@ implementation
 
 
 
-uses RTLConsts, SysUtils, uTPLb_PointerArithmetic;
+uses System.RTLConsts, System.SysUtils, uTPLb_PointerArithmetic;
 
 
 

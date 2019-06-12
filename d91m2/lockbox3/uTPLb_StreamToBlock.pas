@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_StreamToBlock;
 interface
-uses uTPLb_StreamCipher, uTPLb_BlockCipher, Classes, uTPLb_Decorators;
+uses uTPLb_StreamCipher, uTPLb_BlockCipher, System.Classes, uTPLb_Decorators;
 
 type
 
@@ -79,7 +79,7 @@ implementation
 
 
 
-uses SysUtils, Math, uTPLb_StreamUtils, uTPLb_CFB_Block, uTPLb_Constants,
+uses System.SysUtils, System.Math, uTPLb_StreamUtils, uTPLb_CFB_Block, uTPLb_Constants,
      uTPLb_CFB_8Bit, uTPLb_PointerArithmetic, uTPLb_I18n;
 
 

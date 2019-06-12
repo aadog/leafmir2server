@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_StreamCipher;
 interface
-uses Classes;
+uses System.Classes;
 type
 
 TAlgorithmicFeature = (  // Flags which describe hashes, ciphers and chain modes.

@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_CFB_8Bit;
 interface
-uses Classes, uTPLb_StreamCipher, uTPLb_BlockCipher;
+uses System.Classes, uTPLb_StreamCipher, uTPLb_BlockCipher;
 
 type
 

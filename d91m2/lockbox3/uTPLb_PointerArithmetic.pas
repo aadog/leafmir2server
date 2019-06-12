@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_PointerArithmetic;
 interface
-uses Classes;
+uses System.Classes;
 
 {$if CompilerVersion >= 17.00}{$REGION 'Notes on NativeInt/NativeUInt'}{$ifend}
 //                                        Size on Win32   |   Size on Win64  | Size on OS X  | Size on iOS

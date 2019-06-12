@@ -1,6 +1,6 @@
 {*******************************************************}
 {                                                       }
-{       32Î»CRCÑ­»·ÈßÓàÐ£ÑéÂëÊµÏÖµ¥Ôª                   }
+{       32Î»CRCÑ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Êµï¿½Öµï¿½Ôª                   }
 {       CRC For Windows                                 }
 {                                                       }
 {       Copyright (R) 2001                              }
@@ -8,28 +8,28 @@
 {*******************************************************}
 
 {
-   ËµÃ÷:
-       Ê¹ÓÃµÄ¶àÏîÊ½($EDB88200)£º
+   Ëµï¿½ï¿½:
+       Ê¹ï¿½ÃµÄ¶ï¿½ï¿½ï¿½Ê½($EDB88200)ï¿½ï¿½
        x^32+x^26+x^23+x^22+x^16+x^12+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x^1+x^0
-       ÕâÊÇÓÉEthernet/ADCCPµÈÐ­ÒéÍÆ¼öµÄ¶àÏîÊ½.
+       ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ethernet/ADCCPï¿½ï¿½Ð­ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ê½.
 }
 
 unit Crc;
 
 interface
 
-uses windows, SysUtils;
+uses winapi.windows, System.SysUtils;
 
-function Crc32(buf: PByte; len: Integer): Cardinal; //ÊµÏÖ¼ÆËã
+function Crc32(buf: PByte; len: Integer): Cardinal; //Êµï¿½Ö¼ï¿½ï¿½ï¿½
 
-procedure make_crc_table; //¶¯Ì¬´´½¨CRC±í
+procedure make_crc_table; //ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½CRCï¿½ï¿½
 
-{--$DEFINE DynamicMakeCRCTableFlage  } //ÊÇ·ñ¶¯Ì¬´´½¨CRC±í
+{--$DEFINE DynamicMakeCRCTableFlage  } //ï¿½Ç·ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½CRCï¿½ï¿½
 
 
 implementation
 
-//CRC±íÔ¤Éè¾²Ì¬±í,¿ÉÒÔ¼Ó¿ìÐ£ÑéËÙ¶È
+//CRCï¿½ï¿½Ô¤ï¿½è¾²Ì¬ï¿½ï¿½,ï¿½ï¿½ï¿½Ô¼Ó¿ï¿½Ð£ï¿½ï¿½ï¿½Ù¶ï¿½
 var
   crc_table: array[0..255] of Cardinal = (
     $00000000, $77073096, $EE0E612C, $990951BA, $076DC419,
@@ -127,7 +127,7 @@ begin
     crc := crc xor $FFFFFFFF;
     while (len >= 8) do
     begin
-        {Ò»´Î´¦Àí8¸öÔÙÑ­»·À´¼Ó¿ì´¦ÀíËÙ¶È}
+        {Ò»ï¿½Î´ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ì´¦ï¿½ï¿½ï¿½Ù¶ï¿½}
       crc := crc_table[(crc xor Cardinal(buf^)) and $FF] xor (crc shr 8);
       inc(buf);
       crc := crc_table[(crc xor Cardinal(buf^)) and $FF] xor (crc shr 8);
@@ -149,7 +149,7 @@ begin
     end;
     if (len <> 0) then
       repeat
-        {Ê£ÓàµÄ²»×ã8¸ö×Ö½Ú£¬Ôòµ¥¸ö´¦Àí}
+        {Ê£ï¿½ï¿½Ä²ï¿½ï¿½ï¿½8ï¿½ï¿½ï¿½Ö½Ú£ï¿½ï¿½òµ¥¸ï¿½ï¿½ï¿½ï¿½ï¿½}
         crc := crc_table[(crc xor Cardinal(buf^)) and $FF] xor (crc shr 8);
         inc(buf);
 

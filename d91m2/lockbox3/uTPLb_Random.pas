@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_Random;
 interface
-uses Classes;
+uses System.Classes;
 
 type
 
@@ -69,7 +69,7 @@ implementation
 
 
 
-uses Math, Windows, SysUtils, uTPLb_IntegerUtils;
+uses System.Math, Winapi.Windows, System.SysUtils, uTPLb_IntegerUtils;
 var
   Inst: TRandomStream = nil;
 

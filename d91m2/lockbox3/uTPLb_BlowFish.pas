@@ -30,7 +30,7 @@ and earlier was TurboPower Software.
 
 unit uTPLb_BlowFish;
 interface
-uses Classes, uTPLb_BlockCipher, uTPLb_StreamCipher, uTPLb_Decorators;
+uses System.Classes, uTPLb_BlockCipher, uTPLb_StreamCipher, uTPLb_Decorators;
 
 const
   StoreBlowFishKeysAsExpanded = True;  // To do: Make this an option.
@@ -109,7 +109,7 @@ implementation
 
 
 
-uses uTPLb_Constants, SysUtils
+uses uTPLb_Constants, System.SysUtils
 {$IF compilerversion <= 17}
 , uTPLb_D7Compatibility
 {$IFEND}

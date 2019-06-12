@@ -31,7 +31,7 @@ and earlier was TurboPower Software.
 
 
 interface
-uses uTPLb_StreamCipher, uTPLb_BlockCipher, Classes, Types, uTPLb_Decorators;
+uses uTPLb_StreamCipher, uTPLb_BlockCipher, System.Classes, System.Types, uTPLb_Decorators;
 
 type
 
@@ -103,7 +103,7 @@ implementation
 
 
 
-uses SysUtils, Math, uTPLb_StreamUtils, uTPLb_Constants, uTPLb_StreamToBlock,
+uses System.SysUtils, System.Math, uTPLb_StreamUtils, uTPLb_Constants, uTPLb_StreamToBlock,
      uTPLb_PointerArithmetic, uTPLb_I18n, uTPLb_CBC, uTPLb_Random
 {$IF compilerversion <= 17}
 , uTPLb_D7Compatibility
