@@ -2,7 +2,6 @@ package base
 
 import (
 	"errors"
-	"fmt"
 	"github.com/name5566/leaf/log"
 	. "github.com/ying32/govcl/vcl"
 	"syscall"
@@ -175,7 +174,6 @@ func EncryptAES_EDcode(_in []byte) []byte {
 	return r
 }
 func Base64Encode_EDcode(_in []byte, _len int) []byte {
-	fmt.Println(_len)
 	instm := NewMemoryStreamFromBytes(_in)
 	defer instm.Free()
 	outstm := NewMemoryStream()
@@ -190,9 +188,11 @@ func Base64Encode_EDcode(_in []byte, _len int) []byte {
 	return r
 }
 func Crc32(_in []byte) uint32 {
+	instm := NewMemoryStreamFromBytes(_in)
+	defer instm.Free()
+	instm.SetPosition(0)
 	r, _, _ := cCrc32.Call(
-		uintptr(unsafe.Pointer(&_in[0])),
-		uintptr(len(_in)),
+		uintptr(unsafe.Pointer(instm.Instance())),
 	)
 	return uint32(r)
 }

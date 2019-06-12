@@ -37,9 +37,13 @@ begin
     _instm.ReadData(pansichar(pin),_instm.Size);
     EDCode.SetPassWord(pin);
 end;
-function cCrc32(Buf: PByte; Len: Integer): Cardinal;stdcall;
+function cCrc32(_instm:TStream): Cardinal;stdcall;
+var
+byin:TBytes;
 begin
-   Result:=Crc.Crc32(Buf,Len);
+   SetLength(byin,_instm.Size);
+   _instm.Read(byin[0],_instm.Size);
+   Result:=Crc.Crc32(@byin[0],length(byin));
 end;
 procedure cEncodeString_EDcode(_instm:TStream;_outstm:TStream);stdcall;
 var
@@ -121,18 +125,6 @@ begin
     _outstm.Write(outbuf[0],16);
     _outstm.Position:=0;
 end;
-//procedure cBase64Encode_EDcode(_instm:TStream;_outstm:TStream;_len:Integer);stdcall;
-//var
-//r:AnsiString;
-//byin:TBytes;
-//begin
-//    SetLength(byin,_instm.Size);
-//    _instm.Read(byin,_instm.Size);
-//    SetLength(r,_len);
-//    EDCode.Base64Encode(pansichar(stringof(byin)),_len,r);
-//    _outstm.Write(BytesOf(r)[0],_len);
-//    _outstm.Position:=0;
-//end;
 function BytestoHexString(ABytes: TBytes; len: Integer): AnsiString;
 begin
   SetLength(Result, len*2);
@@ -161,6 +153,7 @@ cDecodeString_uEDCode,
 cBase64DecodeEx_EDcode,
 cDecryptAES_EDcode,
 cEncryptAES_EDcode,
-cBase64Encode_EDcode
+cBase64Encode_EDcode,
+cCrc32
 ;
 end.
