@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"github.com/name5566/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
@@ -115,6 +116,7 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 		if err != nil {
 			return err
 		}
+		fmt.Println(message)
 		var encbuf bytes.Buffer
 
 		//解密头部字节
@@ -129,6 +131,8 @@ func (p *MsgParser) Write(conn *network.TCPConn, args ...[]byte) error {
 			sbuf := base.EncodeString_EDCode([]byte(message.Stringlines()))
 			encbuf.Write(sbuf)
 		}
+		fmt.Println(string(encbuf.Bytes()))
+
 		wbuf.WriteString("#")
 		wbuf.Write(encbuf.Bytes())
 		wbuf.WriteString("!")

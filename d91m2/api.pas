@@ -6,7 +6,8 @@ uses
  System.Classes,
  System.SysUtils,
  EDCode,
- Crc
+ Crc,
+ Vcl.Dialogs
  ;
 
 implementation
@@ -30,12 +31,13 @@ begin
 end;
 procedure cSetPassWord_EDcode(_instm:TStream);stdcall;
 var
-pin:PAnsiChar;
+pin:Ansistring;
 begin
-    _instm.ReadData(pin,_instm.Size);
+    SetLength(pin,_instm.Size);
+    _instm.ReadData(pansichar(pin),_instm.Size);
     EDCode.SetPassWord(pin);
 end;
-function cCrc32(Buf: PByte; Len: Integer): Cardinal;
+function cCrc32(Buf: PByte; Len: Integer): Cardinal;stdcall;
 begin
    Result:=Crc.Crc32(Buf,Len);
 end;
@@ -119,15 +121,33 @@ begin
     _outstm.Write(outbuf[0],16);
     _outstm.Position:=0;
 end;
-procedure cBase64Encode_EDcode(_instm:TStream;_outstm:TStream);stdcall;
+//procedure cBase64Encode_EDcode(_instm:TStream;_outstm:TStream;_len:Integer);stdcall;
+//var
+//r:AnsiString;
+//byin:TBytes;
+//begin
+//    SetLength(byin,_instm.Size);
+//    _instm.Read(byin,_instm.Size);
+//    SetLength(r,_len);
+//    EDCode.Base64Encode(pansichar(stringof(byin)),_len,r);
+//    _outstm.Write(BytesOf(r)[0],_len);
+//    _outstm.Position:=0;
+//end;
+function BytestoHexString(ABytes: TBytes; len: Integer): AnsiString;
+begin
+  SetLength(Result, len*2);
+  BinToHex(@ABytes[0], PAnsiChar(Result), len);
+end;
+procedure cBase64Encode_EDcode(_instm:TStream;_outstm:TStream;_len:Integer);stdcall;
 var
 r:AnsiString;
 byin:TBytes;
 begin
     SetLength(byin,_instm.Size);
     _instm.Read(byin,_instm.Size);
-    EDCode.Base64Encode(pansichar(stringof(byin)),length(byin),r);
-    _outstm.Write(BytesOf(r)[0],length(r));
+    SetLength(r,_len);
+    EDCode.Base64Encode(pansichar(pbyte(@byin[0])),_len,r);
+    _outstm.Write(BytesOf(r)[0],_len);
     _outstm.Position:=0;
 end;
 exports

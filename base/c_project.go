@@ -2,6 +2,7 @@ package base
 
 import (
 	"errors"
+	"fmt"
 	"github.com/name5566/leaf/log"
 	. "github.com/ying32/govcl/vcl"
 	"syscall"
@@ -161,7 +162,7 @@ func EncryptAES_EDcode(_in []byte) []byte {
 	if len(_in) != 16 {
 		panic(errors.New("数组长度必须是16位"))
 	}
-	instm := NewMemoryStreamFromBytes(_in[0:16])
+	instm := NewMemoryStreamFromBytes(_in)
 	defer instm.Free()
 	outstm := NewMemoryStream()
 	defer outstm.Free()
@@ -174,6 +175,7 @@ func EncryptAES_EDcode(_in []byte) []byte {
 	return r
 }
 func Base64Encode_EDcode(_in []byte, _len int) []byte {
+	fmt.Println(_len)
 	instm := NewMemoryStreamFromBytes(_in)
 	defer instm.Free()
 	outstm := NewMemoryStream()
@@ -182,6 +184,7 @@ func Base64Encode_EDcode(_in []byte, _len int) []byte {
 	cBase64Encode_EDcode.Call(
 		uintptr(unsafe.Pointer(instm.Instance())),
 		uintptr(unsafe.Pointer(outstm.Instance())),
+		uintptr(_len),
 	)
 	_, r := outstm.Read(int32(outstm.Size()))
 	return r
