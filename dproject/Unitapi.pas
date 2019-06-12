@@ -21,6 +21,7 @@ begin
     instm:=TMemoryStream.create;
     outstm:=TMemoryStream.Create;
     try
+
        instm.WriteBuffer(_instm^,_inlen);
        instm.Position:=0;
        uEDCode.DecodeStream(instm,outstm,stringof(bytesof(_key)));
