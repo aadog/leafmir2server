@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/name5566/leaf"
-	lconf "github.com/name5566/leaf/conf"
+	"github.com/a97077088/leaf"
+	lconf "github.com/a97077088/leaf/conf"
 	"leafmir2server/conf"
 	"leafmir2server/game"
 	"leafmir2server/gamegate"

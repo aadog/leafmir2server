@@ -2,8 +2,8 @@ package sel
 
 import (
 	"fmt"
-	"github.com/name5566/leaf/gate"
-	"github.com/name5566/leaf/log"
+	"github.com/a97077088/leaf/gate"
+	"github.com/a97077088/leaf/log"
 	"leafmir2server/base"
 	"leafmir2server/conf"
 	"leafmir2server/msg"

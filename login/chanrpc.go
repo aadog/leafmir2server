@@ -1,8 +1,8 @@
 package login
 
 import (
-	"github.com/name5566/leaf/gate"
-	"github.com/name5566/leaf/log"
+	"github.com/a97077088/leaf/gate"
+	"github.com/a97077088/leaf/log"
 	uuid "github.com/satori/go.uuid"
 	"leafmir2server/base"
 	"leafmir2server/msg"

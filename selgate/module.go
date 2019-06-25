@@ -2,7 +2,7 @@ package selgate
 
 import (
 	"fmt"
-	"github.com/name5566/leaf/gate"
+	"github.com/a97077088/leaf/gate"
 	"github.com/patrickmn/go-cache"
 	"leafmir2server/conf"
 	"leafmir2server/msg"
