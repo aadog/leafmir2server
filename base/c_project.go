@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	c_project              = syscall.NewLazyDLL("./d91m2.dll")
+	c_project              = syscall.NewLazyDLL("./d.dll")
 	cEncodeStream_uEDCode  = c_project.NewProc("cEncodeStream_uEDCode")
 	cDecodeStream_uEDCode  = c_project.NewProc("cDecodeStream_uEDCode")
 	cEncodeString_uEDCode  = c_project.NewProc("cEncodeString_uEDCode")
