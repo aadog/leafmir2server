@@ -1,6 +1,7 @@
 package game
 
 import (
+	"fmt"
 	"github.com/a97077088/leaf/gate"
 	"github.com/a97077088/leaf/log"
 	"leafmir2server/base"
@@ -18,6 +19,9 @@ func init() {
 	handleMsg(&msg.GameLoginMessage{}, handleGamelogin)
 	handleMsg(&msg.LoginnoticeokMessage{}, handleLoginnoticeok)
 	handleMsg(&msg.QueryBagitemsMessage{}, handleQuerybagitems)
+	handleMsg(&msg.ClientdataVersionMessage{}, handleClientdataversion)
+	handleMsg(&msg.WantMinimapMessage{}, handleWantMinimap)
+	handleMsg(&msg.HerodurachangeMessage{}, handleHerodurchange)
 }
 
 func handleGameSession(args []interface{}) {
@@ -60,8 +64,8 @@ func handleLoginnoticeok(args []interface{}) {
 	newmapr.Add_with_line(mainmapname)
 	a.WriteMsg(newmapr)
 
-	//logonr:=msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_LOGON,260964368,41026185,7,0,11966752,0,0)
-	//
+	logonr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_LOGON, 260964368, 37880412, 0, 4, 0, 0, 0)
+	a.WriteMsg(logonr)
 }
 func handleQuerybagitems(args []interface{}) {
 	// 收到的 Hello 消息
@@ -73,4 +77,26 @@ func handleQuerybagitems(args []interface{}) {
 	log.Debug("%v", m)
 	querybagitemsr := msg.NewMir2Message_with_msg_recog_param_tag_series_nsessionid_ntoken_ctc_lines(msg.SM_BAGITEMS, 1, 0, 0, 0, 0, 0, 0)
 	a.WriteMsg(querybagitemsr)
+}
+func handleClientdataversion(args []interface{}) {
+	// 收到的 Hello 消息
+	m := args[0].(*msg.ClientdataVersionMessage)
+	// 消息的发送者
+	a := args[1].(gate.Agent)
+	_ = a
+	fmt.Println(base.ConvertByte2String([]byte(m.Lines[0]), base.GBK))
+}
+func handleWantMinimap(args []interface{}) {
+	m := args[0].(*msg.WantMinimapMessage)
+	// 消息的发送者
+	a := args[1].(gate.Agent)
+	_ = a
+	fmt.Println(m)
+}
+func handleHerodurchange(args []interface{}) {
+	m := args[0].(*msg.HerodurachangeMessage)
+	// 消息的发送者
+	a := args[1].(gate.Agent)
+	_ = a
+	fmt.Println(m)
 }

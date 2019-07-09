@@ -21,4 +21,7 @@ func router() {
 	msg.Processor.SetRouter(&msg.GameLoginMessage{}, game.ChanRPC)
 	msg.Processor.SetRouter(&msg.LoginnoticeokMessage{}, game.ChanRPC)
 	msg.Processor.SetRouter(&msg.QueryBagitemsMessage{}, game.ChanRPC)
+	msg.Processor.SetRouter(&msg.ClientdataVersionMessage{}, game.ChanRPC)
+	msg.Processor.SetRouter(&msg.WantMinimapMessage{}, game.ChanRPC)
+	msg.Processor.SetRouter(&msg.HerodurachangeMessage{}, game.ChanRPC)
 }

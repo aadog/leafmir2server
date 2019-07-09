@@ -19,7 +19,9 @@ func init() {
 	Processor.Register(&LoginnoticeokMessage{}, CM_LOGINNOTICEOK)
 	Processor.Register(&QueryBagitemsMessage{}, CM_QUERYBAGITEMS)
 	Processor.Register(&ReqTokenMessage{}, SM_REQTOKEN)
-
+	Processor.Register(&ClientdataVersionMessage{}, CM_CLIENTDATA_VERSION)
+	Processor.Register(&WantMinimapMessage{}, CM_WANTMINIMAP)
+	Processor.Register(&HerodurachangeMessage{}, SM_HERODURACHANGE)
 }
 
 type LoginMessage struct {
@@ -53,5 +55,14 @@ type ResTokenMessage struct {
 	BaseMsg
 }
 type SelResSessionMessage struct {
+	BaseMsg
+}
+type ClientdataVersionMessage struct {
+	BaseMsg
+}
+type WantMinimapMessage struct {
+	BaseMsg
+}
+type HerodurachangeMessage struct {
 	BaseMsg
 }

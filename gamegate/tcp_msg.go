@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"github.com/a97077088/leaf/network"
 	"leafmir2server/base"
 	"leafmir2server/msg"
@@ -70,6 +71,8 @@ func (p *MsgParser) Read(conn *network.TCPConn) ([]byte, error) {
 	} else {
 
 		if len(bt) < 44+2 {
+			fmt.Println(bt)
+			fmt.Println(string(bt))
 			return nil, errors.New("最短长度为45")
 		}
 		nseq, err := strconv.Atoi(string(bt[1]))
